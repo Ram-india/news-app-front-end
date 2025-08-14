@@ -24,7 +24,7 @@ export const AuthProvider = ({ children }) => {
     navigate("/login");
   };
 
-  // ⬇️ Fetch user on mount if token exists
+  // Fetch user on mount if token exists
   useEffect(() => {
     const fetchProfile = async () => {
       if (token && !user) {
