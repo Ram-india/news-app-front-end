@@ -9,6 +9,7 @@ const Home = () => {
   const fetchPersonalizedNews = async () => {
     try {
       const res = await API.get("/news/personalized");
+      console.log("API Response:", res.data); 
       setArticles(res.data.articles || []);
     } catch (err) {
       console.error("Failed to fetch personalized news:", err);
@@ -16,7 +17,7 @@ const Home = () => {
       setLoading(false);
     }
   };
-
+  
   useEffect(() => {
     fetchPersonalizedNews();
   }, []);
@@ -32,6 +33,7 @@ const Home = () => {
           )
         }
       </div>
+      
     </>
 
 
