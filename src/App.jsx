@@ -1,7 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 import { useAuth } from "./context/Authcontext";
-import { useEffect } from "react";
-import { toast, Toaster } from 'react-hot-toast';
 
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -9,46 +8,74 @@ import Home from "./pages/Home";
 import Preference from "./pages/Preference";
 import Profile from "./pages/Profile";
 import PrivateRoute from "./routes/PrivateRoute";
-import DashboardLayout from "./layouts/DashBoardLayout";
 import Emailogs from "./components/Emailogs";
 import EditProfile from "./pages/EditProfile";
-import ForgotPassword from './pages/ForgetPassword';
-import ResetPassword from './pages/resetPassword';
-
+import ForgotPassword from "./pages/ForgetPassword";
+import ResetPassword from "./pages/resetPassword";
+import Navbar from "./components/Navbar"; // ✅ New Top Navbar
 
 const App = () => {
   const { user } = useAuth();
 
-
   return (
     <>
-   <Toaster position="middle-left" />
-   <Routes>
-  {/* Public Routes */}
-  <Route path="/login" element={<Login />} />
-  <Route path="/signup" element={<Signup />} />
-  <Route path="/forgot-password" element={<ForgotPassword />} />
-  <Route path="/reset-password/:token" element={<ResetPassword />} />
+      <Toaster position="middle-left" />
 
-  {/* Protected Dashboard Routes */}
-  <Route
-    path="/dashboard"
-    element={
-      <PrivateRoute>
-        <DashboardLayout />
-      </PrivateRoute>
-    }
-  >
-    <Route path="home" element={<Home />} />
-    <Route path="preferences" element={<Preference />} />
-    <Route path="profile" element={<Profile />} />
-    <Route path="edit-profile" element={<EditProfile />} />
-    <Route path="email-logs" element={<Emailogs />} />
-  </Route>
+      {/* Top Navbar is always visible if user is logged in */}
+      {user && <Navbar />}
 
-  {/* Redirect root to dashboard */}
-  <Route path="/" element={<Navigate to="/dashboard/home" />} />
-</Routes>
+      <Routes>
+        {/* Public Routes */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
+
+        {/* Protected Dashboard Routes */}
+        <Route
+          path="/dashboard/home"
+          element={
+            <PrivateRoute>
+              <Home />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/dashboard/preferences"
+          element={
+            <PrivateRoute>
+              <Preference />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/dashboard/profile"
+          element={
+            <PrivateRoute>
+              <Profile />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/dashboard/edit-profile"
+          element={
+            <PrivateRoute>
+              <EditProfile />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/dashboard/email-logs"
+          element={
+            <PrivateRoute>
+              <Emailogs />
+            </PrivateRoute>
+          }
+        />
+
+        {/* Redirect root to dashboard */}
+        <Route path="/" element={<Navigate to="/dashboard/home" />} />
+      </Routes>
     </>
   );
 };

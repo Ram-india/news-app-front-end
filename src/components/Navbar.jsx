@@ -1,25 +1,11 @@
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/Authcontext";
 
-
-import React, { useState, useRef, useEffect } from 'react';
-import { useAuth } from '../context/Authcontext';
-import { FaUser, FaCog, FaSignOutAlt, FaBars } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
-
-const Navbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
+export default function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
   const { user, logout } = useAuth();
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const dropdownRef = useRef();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-        setDropdownOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
 
   const handleLogout = () => {
     logout();
@@ -27,55 +13,86 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
   };
 
   return (
-    <header className="flex justify-between items-center bg-blue-800 text-white px-6 py-4 shadow z-20 relative">
-  
-      <button 
-       className="md:hidden"
-      onClick={() => setIsSidebarOpen((prev) => !prev)}>
-        <FaBars />
-      </button>
-      <h1 className="text-xl font-bold">NEWS APP</h1>
+    <header className="w-full border-b bg-white shadow-sm sticky top-0 z-50">
+      <div className="max-w-6xl mx-auto flex justify-between items-center py-4 px-6">
+        {/* Logo */}
+        <div
+          className="text-2xl font-bold cursor-pointer"
+          onClick={() => navigate("/dashboard/home")}
+        >
+          LiveNews
+        </div>
 
-      <div className="relative" ref={dropdownRef}>
-        <img
-          src={`https://ui-avatars.com/api/?name=${user?.name || "User"}`}
-          className="w-8 h-8 rounded-full cursor-pointer"
-          onClick={() => setDropdownOpen(!dropdownOpen)}
-          alt="Profile"
-        />
-        {dropdownOpen && (
-          <div className="absolute right-0 mt-2 w-48 bg-white text-black rounded shadow-lg">
-            <ul className="py-2">
-              <li
-                className="flex items-center gap-2 px-4 py-2 hover:bg-gray-200 cursor-pointer"
-                onClick={() => {
-                  navigate("/dashboard/profile");
-                  setDropdownOpen(false);
-                }}
-              >
-                <FaUser /> Profile
-              </li>
-              <li
-                className="flex items-center gap-2 px-4 py-2 hover:bg-gray-200 cursor-pointer"
-                onClick={() => {
-                  navigate("/dashboard/preferences");
-                  setDropdownOpen(false);
-                }}
-              >
-                <FaCog /> Preferences
-              </li>
-              <li
-                className="flex items-center gap-2 px-4 py-2 hover:bg-gray-200 cursor-pointer"
-                onClick={handleLogout}
-              >
-                <FaSignOutAlt /> Logout
-              </li>
-            </ul>
-          </div>
-        )}
+        {/* Desktop Nav Links */}
+        <nav className="hidden md:flex space-x-6 text-gray-700 font-medium">
+          <Link to="/dashboard/home">Home</Link>
+          <Link to="/dashboard/preferences">Preferences</Link>
+          <Link to="/dashboard/email-logs">Email Logs</Link>
+        </nav>
+
+        {/* Right Side */}
+        <div className="flex items-center space-x-4">
+          <input
+            type="text"
+            placeholder="Search"
+            className="px-3 py-1 border rounded-lg focus:outline-none"
+          />
+          {user ? (
+            <div className="relative group">
+              <button className="bg-black text-white px-4 py-2 rounded-lg">
+                {user.name || "Profile"}
+              </button>
+              <div className="absolute right-0 hidden group-hover:block bg-white shadow-lg rounded-md mt-2 py-2">
+                <Link
+                  to="/dashboard/profile"
+                  className="block px-4 py-2 hover:bg-gray-100"
+                >
+                  Profile
+                </Link>
+                <Link
+                  to="/dashboard/edit-profile"
+                  className="block px-4 py-2 hover:bg-gray-100"
+                >
+                  Edit Profile
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                >
+                  Logout
+                </button>
+              </div>
+            </div>
+          ) : (
+            <Link to="/login" className="bg-black text-white px-4 py-2 rounded-lg">
+              Login
+            </Link>
+          )}
+        </div>
+
+        {/* Mobile Hamburger */}
+        <button
+          className="md:hidden ml-4"
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          ☰
+        </button>
       </div>
+
+      {/* Mobile Menu */}
+      {isOpen && (
+        <div className="md:hidden bg-white border-t px-6 py-4 space-y-3">
+          <Link to="/dashboard/home" className="block">Home</Link>
+          <Link to="/dashboard/preferences" className="block">Preferences</Link>
+          <Link to="/dashboard/email-logs" className="block">Email Logs</Link>
+          {user && (
+            <>
+              <Link to="/dashboard/profile" className="block">Profile</Link>
+              <button onClick={handleLogout} className="block">Logout</button>
+            </>
+          )}
+        </div>
+      )}
     </header>
   );
-};
-
-export default Navbar;
+}
