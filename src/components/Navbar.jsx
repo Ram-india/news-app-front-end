@@ -39,7 +39,7 @@ export default function Navbar() {
           />
           {user ? (
             <div className="relative group">
-              <button className="bg-black text-white px-4 py-2 rounded-lg">
+              <button className="bg-black text-white px-4 py-2 rounded-full">
                 {user.name || "Profile"}
               </button>
               <div className="absolute right-0 hidden group-hover:block bg-white shadow-lg rounded-md mt-2 py-2">
