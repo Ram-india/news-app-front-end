@@ -24,7 +24,7 @@ const Home = () => {
   return (
     <>
     
-      <div className=' container px-4 mx-auto '>
+      <div className=' container px-8 mx-auto '>
         <div className='grid gap-6 grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 p-4'>
 
         {
