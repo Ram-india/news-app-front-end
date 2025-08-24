@@ -24,14 +24,17 @@ const Home = () => {
   return (
     <>
     
-      <div className=' container mx-auto grid gap-6 grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 p-4'>
+      <div className=' container px-4 mx-auto '>
+        <div className='grid gap-6 grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 p-4'>
+
         {
           loading ? (
             <p>Loading News..</p>
-          ):(
-            articles.map((article, index)=> <Newscard key={index} article={article}/>)
-          )
+            ):(
+              articles.map((article, index)=> <Newscard key={index} article={article}/>)
+              )
         }
+         </div>
       </div>
       
     </>
