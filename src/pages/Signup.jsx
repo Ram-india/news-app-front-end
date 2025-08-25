@@ -16,7 +16,7 @@ const Signup = () => {
     try {
       const res = await API.post("/auth/signup", form);
       console.log("Signup response:", res.data);
-      alert("Signup successful! Please login."); // ✅ No err here
+      alert("Signup successful! Please login."); 
       navigate("/login");
     } catch (err) {
       console.error(" Signup error:", err);
