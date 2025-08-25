@@ -33,7 +33,7 @@ const Newscard = ({ article }) => {
           <span
             className={`inline-block px-2 py-1 text-xs font-semibold rounded-full ${categoryClass}`}
           >
-            {article.category}
+            {article.publishedAt}
           </span>
         )}
 
