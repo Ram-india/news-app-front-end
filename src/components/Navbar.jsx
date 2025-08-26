@@ -4,6 +4,7 @@ import { useAuth } from "../context/Authcontext";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
@@ -23,11 +24,11 @@ export default function Navbar() {
           LiveNews
         </div>
 
-        {/* Desktop Nav Links */}
+        {/* Desktop Nav */}
         <nav className="hidden md:flex space-x-6 text-gray-700 font-medium">
-          <Link to="/dashboard/home">Home</Link>
-          <Link to="/dashboard/preferences">Preferences</Link>
-          <Link to="/dashboard/email-logs">Email Logs</Link>
+          <Link to="/dashboard/home" className="hover:text-black">Home</Link>
+          <Link to="/dashboard/preferences" className="hover:text-black">Preferences</Link>
+          <Link to="/dashboard/email-logs" className="hover:text-black">Email Logs</Link>
         </nav>
 
         {/* Right Side */}
@@ -35,33 +36,40 @@ export default function Navbar() {
           <input
             type="text"
             placeholder="Search"
-            className="px-3 py-1 border rounded-lg focus:outline-none"
+            className="hidden md:block px-3 py-1 border rounded-lg focus:outline-none"
           />
           {user ? (
-            <div className="relative group">
-              <button className="bg-black text-white px-4 py-2 rounded-full">
-                {user.name || "Profile"}
+            <div className="relative">
+              <button
+                onClick={() => setProfileOpen(!profileOpen)}
+                className="bg-black text-white px-4 py-2 rounded-full"
+              >
+                {user.name?.split(" ")[0] || "Profile"}
               </button>
-              <div className="absolute right-0 hidden group-hover:block bg-white shadow-lg rounded-md mt-2 py-2">
-                <Link
-                  to="/dashboard/profile"
-                  className="block px-4 py-2 hover:bg-gray-100"
-                >
-                  Profile
-                </Link>
-                <Link
-                  to="/dashboard/edit-profile"
-                  className="block px-4 py-2 hover:bg-gray-100"
-                >
-                  Edit Profile
-                </Link>
-                <button
-                  onClick={handleLogout}
-                  className="block w-full text-left px-4 py-2 hover:bg-gray-100"
-                >
-                  Logout
-                </button>
-              </div>
+              {profileOpen && (
+                <div className="absolute right-0 bg-white shadow-lg rounded-md mt-2 py-2 w-40">
+                  <Link
+                    to="/dashboard/profile"
+                    className="block px-4 py-2 hover:bg-gray-100"
+                    onClick={() => setProfileOpen(false)}
+                  >
+                    Profile
+                  </Link>
+                  <Link
+                    to="/dashboard/edit-profile"
+                    className="block px-4 py-2 hover:bg-gray-100"
+                    onClick={() => setProfileOpen(false)}
+                  >
+                    Edit Profile
+                  </Link>
+                  <button
+                    onClick={handleLogout}
+                    className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                  >
+                    Logout
+                  </button>
+                </div>
+              )}
             </div>
           ) : (
             <Link to="/login" className="bg-black text-white px-4 py-2 rounded-lg">
@@ -85,11 +93,14 @@ export default function Navbar() {
           <Link to="/dashboard/home" className="block">Home</Link>
           <Link to="/dashboard/preferences" className="block">Preferences</Link>
           <Link to="/dashboard/email-logs" className="block">Email Logs</Link>
-          {user && (
+          {user ? (
             <>
               <Link to="/dashboard/profile" className="block">Profile</Link>
+              <Link to="/dashboard/edit-profile" className="block">Edit Profile</Link>
               <button onClick={handleLogout} className="block">Logout</button>
             </>
+          ) : (
+            <Link to="/login" className="block">Login</Link>
           )}
         </div>
       )}
