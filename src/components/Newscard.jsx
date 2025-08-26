@@ -16,33 +16,42 @@ const Newscard = ({ article }) => {
     categoryColors[article.category] || categoryColors["Default"];
 
   return (
-    <div className="bg-white shadow-md rounded-xl overflow-hidden hover:shadow-lg transition duration-300">
-      {/* Image */}
-      {article.urlToImage && (
-        <img
-          src={article.urlToImage}
-          alt={article.title}
-          className="w-full h-40 object-cover"
-        />
-      )}
-
-      {/* Content */}
-      <div className="p-3">
-        {/* Category Badge */}
-        {article.category && (
-          <span
-            className={`inline-block px-2 py-1 text-xs font-semibold rounded-full ${categoryClass}`}
-          >
-            {article.publishedAt}
-          </span>
+    <a
+      href={article.url} // ensure your article object has a `url` field
+      target="_blank"
+      rel="noopener noreferrer"
+      className="block" // makes the link behave like a block container
+    >
+      <div className="bg-white shadow-md rounded-xl overflow-hidden hover:shadow-lg hover:scale-[1.02] transition duration-300 cursor-pointer">
+        {article.urlToImage && (
+          <img
+            src={article.urlToImage}
+            alt={article.title}
+            className="w-full h-40 object-cover"
+          />
         )}
 
-        {/* Title */}
-        <h2 className="mt-2 text-sm font-bold text-gray-800 line-clamp-2">
-          {article.title}
-        </h2>
+        <div className="p-3">
+          {article.category && (
+            <span
+              className={`inline-block px-2 py-1 text-xs font-semibold rounded-full ${categoryClass}`}
+            >
+              {article.category}
+            </span>
+          )}
+
+          <h2 className="mt-2 text-sm font-bold text-gray-800 line-clamp-2">
+            {article.title}
+          </h2>
+
+          {article.publishedAt && (
+            <p className="text-xs text-gray-500 mt-1">
+              {new Date(article.publishedAt).toLocaleDateString()}
+            </p>
+          )}
+        </div>
       </div>
-    </div>
+    </a>
   );
 };
 
