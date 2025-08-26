@@ -29,6 +29,7 @@ const Newscard = ({ article }) => {
             alt={article.title}
             className="w-full h-40 object-cover"
           />
+          {console.log(article.urlToImage)}
         )}
 
         <div className="p-3">
