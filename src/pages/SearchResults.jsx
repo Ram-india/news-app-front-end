@@ -42,7 +42,7 @@ export default function SearchResults() {
                 {news.description}
               </p>
             </div>
-          </L>
+          </Link>
         ))}
       </div>
     </div>
