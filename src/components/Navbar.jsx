@@ -13,6 +13,15 @@ export default function Navbar() {
     navigate("/login");
   };
 
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    const query = e.target.search.value.trim();
+    if (query) {
+      navigate(`/dashboard/search?query=${encodeURIComponent(query)}`);
+      e.target.reset(); // clears input after submit
+    }
+  };
+
   return (
     <header className="w-full border-b bg-white shadow-sm sticky top-0 z-50">
       <div className="max-w-6xl mx-auto flex justify-between items-center py-4 px-6">
@@ -40,18 +49,7 @@ export default function Navbar() {
         {/* Right Side */}
         <div className="flex items-center space-x-4">
           {/* Search Box */}
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              const query = e.target.search.value.trim();
-              if (query) {
-                navigate(
-                  `/dashboard/search?query=${encodeURIComponent(query)}`
-                );
-              }
-            }}
-            className="flex items-center space-x-2"
-          >
+          <form onSubmit={handleSearchSubmit} className="flex items-center space-x-2">
             <input
               type="text"
               name="search"
@@ -60,11 +58,12 @@ export default function Navbar() {
             />
             <button
               type="submit"
-              className="bg-black text-white px-3 py-1 rounded-lg"
+              className="bg-black text-white px-3 py-1 rounded-lg hover:bg-gray-800"
             >
               Search
             </button>
           </form>
+
           {user ? (
             <div className="relative">
               <button
