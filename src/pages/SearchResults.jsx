@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import API from "../services/axios";
 
@@ -42,7 +42,7 @@ export default function SearchResults() {
                 {news.description}
               </p>
             </div>
-          </Link>
+          </L>
         ))}
       </div>
     </div>
