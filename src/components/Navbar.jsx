@@ -26,18 +26,45 @@ export default function Navbar() {
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex space-x-6 text-gray-700 font-medium">
-          <Link to="/dashboard/home" className="hover:text-black">Home</Link>
-          <Link to="/dashboard/preferences" className="hover:text-black">Preferences</Link>
-          <Link to="/dashboard/email-logs" className="hover:text-black">Email Logs</Link>
+          <Link to="/dashboard/home" className="hover:text-black">
+            Home
+          </Link>
+          <Link to="/dashboard/preferences" className="hover:text-black">
+            Preferences
+          </Link>
+          <Link to="/dashboard/email-logs" className="hover:text-black">
+            Email Logs
+          </Link>
         </nav>
 
         {/* Right Side */}
         <div className="flex items-center space-x-4">
-          <input
-            type="text"
-            placeholder="Search"
-            className="hidden md:block px-3 py-1 border rounded-lg focus:outline-none"
-          />
+          {/* Search Box */}
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              const query = e.target.search.value.trim();
+              if (query) {
+                navigate(
+                  `/dashboard/search?query=${encodeURIComponent(query)}`
+                );
+              }
+            }}
+            className="flex items-center space-x-2"
+          >
+            <input
+              type="text"
+              name="search"
+              placeholder="Search"
+              className="px-3 py-1 border rounded-lg focus:outline-none"
+            />
+            <button
+              type="submit"
+              className="bg-black text-white px-3 py-1 rounded-lg"
+            >
+              Search
+            </button>
+          </form>
           {user ? (
             <div className="relative">
               <button
@@ -72,17 +99,17 @@ export default function Navbar() {
               )}
             </div>
           ) : (
-            <Link to="/login" className="bg-black text-white px-4 py-2 rounded-lg">
+            <Link
+              to="/login"
+              className="bg-black text-white px-4 py-2 rounded-lg"
+            >
               Login
             </Link>
           )}
         </div>
 
         {/* Mobile Hamburger */}
-        <button
-          className="md:hidden ml-4"
-          onClick={() => setIsOpen(!isOpen)}
-        >
+        <button className="md:hidden ml-4" onClick={() => setIsOpen(!isOpen)}>
           ☰
         </button>
       </div>
@@ -90,17 +117,31 @@ export default function Navbar() {
       {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden bg-white border-t px-6 py-4 space-y-3">
-          <Link to="/dashboard/home" className="block">Home</Link>
-          <Link to="/dashboard/preferences" className="block">Preferences</Link>
-          <Link to="/dashboard/email-logs" className="block">Email Logs</Link>
+          <Link to="/dashboard/home" className="block">
+            Home
+          </Link>
+          <Link to="/dashboard/preferences" className="block">
+            Preferences
+          </Link>
+          <Link to="/dashboard/email-logs" className="block">
+            Email Logs
+          </Link>
           {user ? (
             <>
-              <Link to="/dashboard/profile" className="block">Profile</Link>
-              <Link to="/dashboard/edit-profile" className="block">Edit Profile</Link>
-              <button onClick={handleLogout} className="block">Logout</button>
+              <Link to="/dashboard/profile" className="block">
+                Profile
+              </Link>
+              <Link to="/dashboard/edit-profile" className="block">
+                Edit Profile
+              </Link>
+              <button onClick={handleLogout} className="block">
+                Logout
+              </button>
             </>
           ) : (
-            <Link to="/login" className="block">Login</Link>
+            <Link to="/login" className="block">
+              Login
+            </Link>
           )}
         </div>
       )}
