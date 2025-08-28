@@ -1,62 +1,80 @@
-import { useState, useEffect } from "react";
-import { Search, User } from "lucide-react";
+import { useState } from "react";
+import { Menu, X, Search, User } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
 
-const Navbar = () => {
-  const [dateTime, setDateTime] = useState(new Date());
+export default function NavbarMSNStyle() {
+  const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+  const handleSearch = (e) => {
+    e.preventDefault();
+    const q = e.target.search.value.trim();
+    if (q) navigate(`/search?query=${encodeURIComponent(q)}`);
+  };
 
-  useEffect(() => {
-    const timer = setInterval(() => setDateTime(new Date()), 1000);
-    return () => clearInterval(timer);
-  }, []);
+  const links = ["Home", "World", "Tech", "Business", "Sports"];
 
   return (
-    <header className="w-full border-b shadow-sm">
-      {/* 🔹 Top Utility Bar */}
-      <div className="bg-gray-100 text-gray-700 text-sm flex justify-between items-center px-4 py-2">
-        {/* Left: Date & Time */}
-        <div>
-          {dateTime.toLocaleDateString()} | {dateTime.toLocaleTimeString()}
+    <nav className="bg-white border-b shadow-sm sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="flex items-center justify-between h-16">
+          {/* Left: Logo */}
+          <Link to="/" className="text-2xl font-bold text-gray-800">
+            LiveNews
+          </Link>
+
+          {/* Center: Nav links */}
+          <div className="hidden md:flex space-x-6">
+            {links.map((label) => (
+              <Link
+                key={label}
+                to={`/${label.toLowerCase()}`}
+                className="text-gray-700 hover:text-gray-900"
+              >
+                {label}
+              </Link>
+            ))}
+          </div>
+
+          {/* Right: Search & Profile */}
+          <div className="flex items-center space-x-4">
+            <form onSubmit={handleSearch} className="flex items-center border rounded-full px-2">
+              <input
+                name="search"
+                type="text"
+                placeholder="Search"
+                className="px-2 py-1 focus:outline-none"
+              />
+              <button type="submit">
+                <Search className="w-5 h-5 text-gray-600" />
+              </button>
+            </form>
+            <Link to="/profile">
+              <User className="w-6 h-6 text-gray-600 hover:text-gray-800" />
+            </Link>
+
+            {/* Mobile toggle */}
+            <button className="md:hidden" onClick={() => setIsOpen(!isOpen)}>
+              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
         </div>
 
-        {/* Center: Weather / Location (Placeholder for now) */}
-        <div className="hidden md:block">📍 Chennai, 30°C</div>
-
-        {/* Right: Profile */}
-        <div className="flex items-center gap-2">
-          <img
-            src="https://via.placeholder.com/32"
-            alt="Profile"
-            className="w-8 h-8 rounded-full border"
-          />
-        </div>
+        {/* Mobile Menu */}
+        {isOpen && (
+          <div className="flex flex-col md:hidden py-2 space-y-2">
+            {links.map((label) => (
+              <Link
+                key={label}
+                to={`/${label.toLowerCase()}`}
+                className="block text-gray-700 hover:text-gray-900"
+                onClick={() => setIsOpen(false)}
+              >
+                {label}
+              </Link>
+            ))}
+          </div>
+        )}
       </div>
-
-      {/* 🔹 Main Navbar */}
-      <nav className="flex flex-col md:flex-row items-center justify-between px-4 py-3 bg-white">
-        {/* Left: Logo */}
-        <div className="text-2xl font-bold text-blue-600">NewsApp</div>
-
-        {/* Center: Nav Links */}
-        <ul className="flex gap-6 text-gray-700 font-medium mt-3 md:mt-0">
-          <li className="hover:text-blue-600 cursor-pointer">Home</li>
-          <li className="hover:text-blue-600 cursor-pointer">World</li>
-          <li className="hover:text-blue-600 cursor-pointer">Sports</li>
-          <li className="hover:text-blue-600 cursor-pointer">Business</li>
-          <li className="hover:text-blue-600 cursor-pointer">Technology</li>
-        </ul>
-
-        {/* Right: Search Bar */}
-        <div className="flex items-center gap-2 mt-3 md:mt-0">
-          <input
-            type="text"
-            placeholder="Search news..."
-            className="border rounded-full px-4 py-1 text-sm focus:outline-none"
-          />
-          <Search className="text-gray-600 cursor-pointer" size={20} />
-        </div>
-      </nav>
-    </header>
+    </nav>
   );
-};
-
-export default Navbar;
+}
