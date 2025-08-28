@@ -76,7 +76,7 @@ export default function Navbar() {
                <img
             src={`https://ui-avatars.com/api/?name=${user.name}`}
             alt="Profile"
-            className="w-24 h-24 rounded-full mb-4 border"
+            className="w-10 h-10 rounded-full mb-4 border"
             />
               <button
                 onClick={() => setProfileOpen(!profileOpen)}
