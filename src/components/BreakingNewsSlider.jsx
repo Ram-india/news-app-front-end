@@ -26,7 +26,7 @@ const BreakingNewsSlider = ({ articles }) => {
   };
 
   return (
-    <div className="my-6">
+    <div className="my-6 bg-gray-400">
       <h2 className="text-xl font-bold mb-4 text-red-600">
          Breaking News
       </h2>
