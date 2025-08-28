@@ -31,7 +31,7 @@ export default function Navbar() {
           onClick={() => navigate("/dashboard/home")}
         >
           LiveNews
-        </div>
+        
         {/* Search Box */}
         <form
             onSubmit={handleSearchSubmit}
@@ -50,6 +50,7 @@ export default function Navbar() {
               🔍
             </button>
           </form>
+          </div>
       </div>
 
       {/* Navigation */}
