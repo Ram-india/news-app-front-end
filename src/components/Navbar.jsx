@@ -32,6 +32,24 @@ export default function Navbar() {
         >
           LiveNews
         </div>
+        {/* Search Box */}
+        <form
+            onSubmit={handleSearchSubmit}
+            className="flex items-center space-x-2 bg-white rounded-lg px-2 py-1"
+          >
+            <input
+              type="text"
+              name="search"
+              placeholder="Search news..."
+              className="px-2 py-1 w-40 md:w-56 text-black focus:outline-none"
+            />
+            <button
+              type="submit"
+              className="bg-blue-600 text-white px-3 py-1 rounded-lg hover:bg-blue-500"
+            >
+              🔍
+            </button>
+          </form>
       </div>
 
       {/* Navigation */}
@@ -51,24 +69,7 @@ export default function Navbar() {
 
         {/* Right Side */}
         <div className="flex items-center space-x-4">
-          {/* Search Box */}
-          <form
-            onSubmit={handleSearchSubmit}
-            className="flex items-center space-x-2 bg-white rounded-lg px-2 py-1"
-          >
-            <input
-              type="text"
-              name="search"
-              placeholder="Search news..."
-              className="px-2 py-1 w-40 md:w-56 text-black focus:outline-none"
-            />
-            <button
-              type="submit"
-              className="bg-blue-600 text-white px-3 py-1 rounded-lg hover:bg-blue-500"
-            >
-              🔍
-            </button>
-          </form>
+          
 
           {/* Profile */}
           {user ? (
