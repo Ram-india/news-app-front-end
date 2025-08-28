@@ -24,17 +24,16 @@ export default function Navbar() {
 
   return (
     <header className="w-full border-b bg-white shadow-sm sticky top-0 z-50">
-      <div className="max-w-6xl mx-auto flex justify-between items-center py-4 px-6">
-        {/* Logo */}
-        <div className="container mx-auto">
+      <div className="container mx-auto">
         <div
           className="text-2xl font-bold cursor-pointer"
           onClick={() => navigate("/dashboard/home")}
         >
           LiveNews
         </div>
-        </div>
-        
+      </div>
+      <div className="max-w-6xl mx-auto flex justify-between items-center py-4 px-6">
+        {/* Logo */}
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex space-x-6 text-gray-700 font-medium">
@@ -52,7 +51,10 @@ export default function Navbar() {
         {/* Right Side */}
         <div className="flex items-center space-x-4">
           {/* Search Box */}
-          <form onSubmit={handleSearchSubmit} className="flex items-center space-x-2">
+          <form
+            onSubmit={handleSearchSubmit}
+            className="flex items-center space-x-2"
+          >
             <input
               type="text"
               name="search"
