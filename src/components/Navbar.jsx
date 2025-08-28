@@ -26,12 +26,15 @@ export default function Navbar() {
     <header className="w-full border-b bg-white shadow-sm sticky top-0 z-50">
       <div className="max-w-6xl mx-auto flex justify-between items-center py-4 px-6">
         {/* Logo */}
+        <div className="container mx-auto">
         <div
           className="text-2xl font-bold cursor-pointer"
           onClick={() => navigate("/dashboard/home")}
         >
           LiveNews
         </div>
+        </div>
+        
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex space-x-6 text-gray-700 font-medium">
