@@ -1,65 +1,58 @@
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Autoplay, Pagination } from "swiper/modules";
-import { useEffect, useState } from "react";
-import API from "../services/axios";
-// BreakingNewsSlider.jsx
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
+import React from "react";
+import Slider from "react-slick"; // slick-carousel
 
-const BreakingNewsSlider = () => {
-  const [breakingNews, setBreakingNews] = useState([]);
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
-  useEffect(() => {
-    const fetchBreakingNews = async () => {
-      try {
-        const res = await API.get("/news?category=breaking"); // adjust your API
-        setBreakingNews(res.data.articles || []);
-      } catch (err) {
-        console.error("Error fetching breaking news", err);
+const BreakingNewsSlider = ({ articles }) => {
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 2000,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2500,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: { slidesToShow: 2 }
+      },
+      {
+        breakpoint: 640,
+        settings: { slidesToShow: 1 }
       }
-    };
-    fetchBreakingNews();
-  }, []);
+    ]
+  };
 
   return (
-    <div className="bg-red-700 text-white py-4">
-      <h2 className="text-xl font-bold px-6 mb-3">🚨 Breaking News</h2>
-      <Swiper
-        modules={[Navigation, Autoplay, Pagination]}
-        spaceBetween={20}
-        slidesPerView={3}
-        navigation
-        autoplay={{ delay: 3000, disableOnInteraction: false }}
-        pagination={{ clickable: true }}
-        className="px-6"
-      >
-        {breakingNews.map((news, index) => (
-          <SwiperSlide key={index}>
-            <div className="bg-white text-black rounded-xl shadow-md overflow-hidden hover:shadow-lg transition">
-              {news.urlToImage && (
+    <div className="my-6">
+      <h2 className="text-xl font-bold mb-4 text-red-600">
+         Breaking News
+      </h2>
+      <Slider {...settings}>
+        {articles.map((article, index) => (
+          <div key={index} className="p-2">
+            <div className="bg-white rounded-xl shadow hover:shadow-lg transition">
+              {article.urlToImage && (
                 <img
-                  src={news.urlToImage}
-                  alt={news.title}
-                  className="w-full h-40 object-cover"
+                  src={article.urlToImage}
+                  alt={article.title}
+                  className="w-full h-40 object-cover rounded-t-xl"
                 />
               )}
-              <div className="p-4">
-                <h3 className="font-semibold text-lg line-clamp-2">{news.title}</h3>
-                <p className="text-sm text-gray-600 mt-2 line-clamp-3">{news.description}</p>
-                <a
-                  href={news.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-red-600 mt-3 inline-block hover:underline font-medium"
-                >
-                  Read more →
-                </a>
+              <div className="p-3">
+                <h3 className="text-sm font-semibold line-clamp-2">
+                  {article.title}
+                </h3>
+                <p className="text-xs text-gray-500 mt-1">
+                  {article.source?.name || "Unknown Source"}
+                </p>
               </div>
             </div>
-          </SwiperSlide>
+          </div>
         ))}
-      </Swiper>
+      </Slider>
     </div>
   );
 };

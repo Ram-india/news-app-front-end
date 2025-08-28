@@ -30,7 +30,7 @@ const Home = () => {
         ) : (
           <>
             {/* Breaking News Slider */}
-            <BreakingNewsSlider />
+            <BreakingNewsSlider articles={articles} />
   
             {/* Articles Grid */}
             <div className="grid gap-6 grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 p-4">
