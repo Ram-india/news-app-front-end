@@ -24,7 +24,7 @@ export default function Navbar() {
 
   return (
     <header className="w-full border-b bg-white shadow-sm sticky top-0 z-50">
-      <div className="container mx-auto">
+      <div className="container mx-auto py-1 ">
         <div
           className="text-2xl font-bold cursor-pointer text-center "
           onClick={() => navigate("/dashboard/home")}
@@ -32,7 +32,7 @@ export default function Navbar() {
           LiveNews
         </div>
       </div>
-      <div className="max-w-6xl mx-auto flex justify-between items-center py-4 px-6">
+      <div className="max-w-6xl mx-auto flex justify-between bg-gray-100 items-center py-2 px-6">
         {/* Logo */}
 
         {/* Desktop Nav */}
