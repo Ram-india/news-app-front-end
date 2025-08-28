@@ -26,7 +26,7 @@ export default function Navbar() {
     <header className="w-full border-b bg-white shadow-sm sticky top-0 z-50">
       <div className="container mx-auto">
         <div
-          className="text-2xl font-bold cursor-pointer"
+          className="text-2xl font-bold cursor-pointer text-center "
           onClick={() => navigate("/dashboard/home")}
         >
           LiveNews
