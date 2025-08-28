@@ -76,10 +76,10 @@ export default function Navbar() {
                <img
             src={`https://ui-avatars.com/api/?name=${user.name}`}
             alt="Profile"
-            className="w-10 h-10 rounded-full mb-4 border"
+            className="w-10 h-10 px-4 py-2 rounded-full mb-4 border"
             onClick={() => setProfileOpen(!profileOpen)}
             />
-             
+              
               {profileOpen && (
                 <div className="absolute right-0 bg-white text-black shadow-lg rounded-md mt-2 py-2 w-44">
                   <Link
