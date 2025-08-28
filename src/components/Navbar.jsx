@@ -73,6 +73,11 @@ export default function Navbar() {
           {/* Profile */}
           {user ? (
             <div className="relative">
+               <img
+            src={`https://ui-avatars.com/api/?name=${user.name}`}
+            alt="Profile"
+            className="w-24 h-24 rounded-full mb-4 border"
+            />
               <button
                 onClick={() => setProfileOpen(!profileOpen)}
                 className="bg-white text-blue-700 px-4 py-2 rounded-full font-semibold hover:bg-gray-100"
