@@ -41,11 +41,11 @@ export default function Navbar() {
               type="text"
               name="search"
               placeholder="Search news..."
-              className="px-2 py-1 w-40 md:w-56 text-black focus:outline-none"
+              className="px-2 py-1 w-35 md:w-40 text-black focus:outline-none"
             />
             <button
               type="submit"
-              className="bg-blue-600 text-white px-3 py-1 rounded-lg hover:bg-blue-500"
+              className=" text-white px-3 py-1 rounded-lg hover:bg-blue-500"
             >
               🔍
             </button>
@@ -78,12 +78,12 @@ export default function Navbar() {
                <img
             src={`https://ui-avatars.com/api/?name=${user.name}`}
             alt="Profile"
-            className="px-4 py-4  rounded-full  border"
+            className="px-4 py-4 w-15 rounded-full  border"
             onClick={() => setProfileOpen(!profileOpen)}
             />
               
               {profileOpen && (
-                <div className="absolute right-0 bg-white text-black shadow-lg rounded-md mt-2 py-2 w-44">
+                <div className="absolute right-0 bg-white text-black shadow-lg rounded-md mt-2 py-2  px-4 w-44">
                   <Link
                     to="/dashboard/profile"
                     className="block px-4 py-2 hover:bg-gray-100"
