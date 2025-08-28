@@ -53,7 +53,7 @@ export default function Navbar() {
       </div>
 
       {/* Navigation */}
-      <div className="max-w-7xl mx-auto flex justify-between items-center py-2 px-6 bg-blue-800">
+      <div className="max-w-7xl mx-auto flex justify-between items-center  px-6 bg-blue-800">
         {/* Desktop Nav */}
         <nav className="hidden md:flex space-x-6 font-medium">
           <Link to="/dashboard/home" className="hover:text-gray-200">
@@ -77,7 +77,7 @@ export default function Navbar() {
                <img
             src={`https://ui-avatars.com/api/?name=${user.name}`}
             alt="Profile"
-            className="w-10 h-10 px-4 py-2 rounded-full mb-4 border"
+            className="w-10 h-10 px-4  rounded-full  border"
             onClick={() => setProfileOpen(!profileOpen)}
             />
               
