@@ -25,7 +25,7 @@ export default function Navbar() {
   return (
     <header className="w-full border-b bg-blue-900 text-white shadow-md sticky top-0 z-50">
       {/* Top Bar Logo */}
-      <div className="flex justify-between items-center py-2">
+      <div className="flex justify-around items-center py-2">
         <div
           className="text-2xl font-bold cursor-pointer text-center tracking-wide"
           onClick={() => navigate("/dashboard/home")}
