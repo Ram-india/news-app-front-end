@@ -1,154 +1,62 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/Authcontext";
+import { useState, useEffect } from "react";
+import { Search, User } from "lucide-react";
 
-export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [profileOpen, setProfileOpen] = useState(false);
-  const { user, logout } = useAuth();
-  const navigate = useNavigate();
+const Navbar = () => {
+  const [dateTime, setDateTime] = useState(new Date());
 
-  const handleLogout = () => {
-    logout();
-    navigate("/login");
-  };
-
-  const handleSearchSubmit = (e) => {
-    e.preventDefault();
-    const query = e.target.search.value.trim();
-    if (query) {
-      navigate(`/dashboard/search?query=${encodeURIComponent(query)}`);
-      e.target.reset(); // clears input after submit
-    }
-  };
+  useEffect(() => {
+    const timer = setInterval(() => setDateTime(new Date()), 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
-    <header className="w-full border-b bg-white shadow-sm sticky top-0 z-50">
-      <div className="container mx-auto py-1 ">
-        <div
-          className="text-2xl font-bold cursor-pointer text-center "
-          onClick={() => navigate("/dashboard/home")}
-        >
-          LiveNews
+    <header className="w-full border-b shadow-sm">
+      {/* 🔹 Top Utility Bar */}
+      <div className="bg-gray-100 text-gray-700 text-sm flex justify-between items-center px-4 py-2">
+        {/* Left: Date & Time */}
+        <div>
+          {dateTime.toLocaleDateString()} | {dateTime.toLocaleTimeString()}
+        </div>
+
+        {/* Center: Weather / Location (Placeholder for now) */}
+        <div className="hidden md:block">📍 Chennai, 30°C</div>
+
+        {/* Right: Profile */}
+        <div className="flex items-center gap-2">
+          <img
+            src="https://via.placeholder.com/32"
+            alt="Profile"
+            className="w-8 h-8 rounded-full border"
+          />
         </div>
       </div>
-      <div className="max-w-6xl mx-auto flex justify-between bg-gray-100 items-center py-2 px-6">
-        {/* Logo */}
 
-        {/* Desktop Nav */}
-        <nav className="hidden md:flex space-x-6 text-gray-700 font-medium">
-          <Link to="/dashboard/home" className="hover:text-black">
-            Home
-          </Link>
-          <Link to="/dashboard/preferences" className="hover:text-black">
-            Preferences
-          </Link>
-          <Link to="/dashboard/email-logs" className="hover:text-black">
-            Email Logs
-          </Link>
-        </nav>
+      {/* 🔹 Main Navbar */}
+      <nav className="flex flex-col md:flex-row items-center justify-between px-4 py-3 bg-white">
+        {/* Left: Logo */}
+        <div className="text-2xl font-bold text-blue-600">NewsApp</div>
 
-        {/* Right Side */}
-        <div className="flex items-center space-x-4">
-          {/* Search Box */}
-          <form
-            onSubmit={handleSearchSubmit}
-            className="flex items-center space-x-2"
-          >
-            <input
-              type="text"
-              name="search"
-              placeholder="Search"
-              className="px-3 py-1 border rounded-lg focus:outline-none"
-            />
-            <button
-              type="submit"
-              className="bg-black text-white px-3 py-1 rounded-lg hover:bg-gray-800"
-            >
-              Search
-            </button>
-          </form>
+        {/* Center: Nav Links */}
+        <ul className="flex gap-6 text-gray-700 font-medium mt-3 md:mt-0">
+          <li className="hover:text-blue-600 cursor-pointer">Home</li>
+          <li className="hover:text-blue-600 cursor-pointer">World</li>
+          <li className="hover:text-blue-600 cursor-pointer">Sports</li>
+          <li className="hover:text-blue-600 cursor-pointer">Business</li>
+          <li className="hover:text-blue-600 cursor-pointer">Technology</li>
+        </ul>
 
-          {user ? (
-            <div className="relative">
-              <button
-                onClick={() => setProfileOpen(!profileOpen)}
-                className="bg-black text-white px-4 py-2 rounded-full"
-              >
-                {user.name?.split(" ")[0] || "Profile"}
-              </button>
-              {profileOpen && (
-                <div className="absolute right-0 bg-white shadow-lg rounded-md mt-2 py-2 w-40">
-                  <Link
-                    to="/dashboard/profile"
-                    className="block px-4 py-2 hover:bg-gray-100"
-                    onClick={() => setProfileOpen(false)}
-                  >
-                    Profile
-                  </Link>
-                  <Link
-                    to="/dashboard/edit-profile"
-                    className="block px-4 py-2 hover:bg-gray-100"
-                    onClick={() => setProfileOpen(false)}
-                  >
-                    Edit Profile
-                  </Link>
-                  <button
-                    onClick={handleLogout}
-                    className="block w-full text-left px-4 py-2 hover:bg-gray-100"
-                  >
-                    Logout
-                  </button>
-                </div>
-              )}
-            </div>
-          ) : (
-            <Link
-              to="/login"
-              className="bg-black text-white px-4 py-2 rounded-lg"
-            >
-              Login
-            </Link>
-          )}
+        {/* Right: Search Bar */}
+        <div className="flex items-center gap-2 mt-3 md:mt-0">
+          <input
+            type="text"
+            placeholder="Search news..."
+            className="border rounded-full px-4 py-1 text-sm focus:outline-none"
+          />
+          <Search className="text-gray-600 cursor-pointer" size={20} />
         </div>
-
-        {/* Mobile Hamburger */}
-        <button className="md:hidden ml-4" onClick={() => setIsOpen(!isOpen)}>
-          ☰
-        </button>
-      </div>
-
-      {/* Mobile Menu */}
-      {isOpen && (
-        <div className="md:hidden bg-white border-t px-6 py-4 space-y-3">
-          <Link to="/dashboard/home" className="block">
-            Home
-          </Link>
-          <Link to="/dashboard/preferences" className="block">
-            Preferences
-          </Link>
-          <Link to="/dashboard/email-logs" className="block">
-            Email Logs
-          </Link>
-          {user ? (
-            <>
-              <Link to="/dashboard/profile" className="block">
-                Profile
-              </Link>
-              <Link to="/dashboard/edit-profile" className="block">
-                Edit Profile
-              </Link>
-              <button onClick={handleLogout} className="block">
-                Logout
-              </button>
-            </>
-          ) : (
-            <Link to="/login" className="block">
-              Login
-            </Link>
-          )}
-        </div>
-      )}
+      </nav>
     </header>
   );
-}
+};
+
+export default Navbar;
