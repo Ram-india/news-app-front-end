@@ -25,13 +25,13 @@ export default function Navbar() {
   return (
     <header className="w-full border-b bg-blue-900 text-white shadow-md sticky top-0 z-50">
       {/* Top Bar Logo */}
-      <div className="container mx-auto py-2">
+      <div className="flex justify-between items-center py-2">
         <div
           className="text-2xl font-bold cursor-pointer text-center tracking-wide"
           onClick={() => navigate("/dashboard/home")}
         >
           LiveNews
-        
+          </div>
         {/* Search Box */}
         <form
             onSubmit={handleSearchSubmit}
@@ -50,7 +50,7 @@ export default function Navbar() {
               🔍
             </button>
           </form>
-          </div>
+          
       </div>
 
       {/* Navigation */}
@@ -78,7 +78,7 @@ export default function Navbar() {
                <img
             src={`https://ui-avatars.com/api/?name=${user.name}`}
             alt="Profile"
-            className="w-10 h-10 px-4  rounded-full  border"
+            className="px-4 py-4  rounded-full  border"
             onClick={() => setProfileOpen(!profileOpen)}
             />
               
