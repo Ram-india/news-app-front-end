@@ -1,80 +1,159 @@
 import { useState } from "react";
-import { Menu, X, Search, User } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/Authcontext";
 
-export default function NavbarMSNStyle() {
+export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
-  const handleSearch = (e) => {
-    e.preventDefault();
-    const q = e.target.search.value.trim();
-    if (q) navigate(`/search?query=${encodeURIComponent(q)}`);
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
   };
 
-  const links = ["Home", "World", "Tech", "Business", "Sports"];
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    const query = e.target.search.value.trim();
+    if (query) {
+      navigate(`/dashboard/search?query=${encodeURIComponent(query)}`);
+      e.target.reset();
+    }
+  };
 
   return (
-    <nav className="bg-white border-b shadow-sm sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          {/* Left: Logo */}
-          <Link to="/" className="text-2xl font-bold text-gray-800">
-            LiveNews
+    <header className="w-full border-b bg-blue-600 text-white shadow-md sticky top-0 z-50">
+      {/* Top Bar Logo */}
+      <div className="container mx-auto py-2">
+        <div
+          className="text-2xl font-bold cursor-pointer text-center tracking-wide"
+          onClick={() => navigate("/dashboard/home")}
+        >
+          LiveNews
+        </div>
+      </div>
+
+      {/* Navigation */}
+      <div className="max-w-7xl mx-auto flex justify-between items-center py-2 px-6 bg-blue-700">
+        {/* Desktop Nav */}
+        <nav className="hidden md:flex space-x-6 font-medium">
+          <Link to="/dashboard/home" className="hover:text-gray-200">
+            Home
           </Link>
+          <Link to="/dashboard/preferences" className="hover:text-gray-200">
+            Preferences
+          </Link>
+          <Link to="/dashboard/email-logs" className="hover:text-gray-200">
+            Email Logs
+          </Link>
+        </nav>
 
-          {/* Center: Nav links */}
-          <div className="hidden md:flex space-x-6">
-            {links.map((label) => (
-              <Link
-                key={label}
-                to={`/${label.toLowerCase()}`}
-                className="text-gray-700 hover:text-gray-900"
-              >
-                {label}
-              </Link>
-            ))}
-          </div>
-
-          {/* Right: Search & Profile */}
-          <div className="flex items-center space-x-4">
-            <form onSubmit={handleSearch} className="flex items-center border rounded-full px-2">
-              <input
-                name="search"
-                type="text"
-                placeholder="Search"
-                className="px-2 py-1 focus:outline-none"
-              />
-              <button type="submit">
-                <Search className="w-5 h-5 text-gray-600" />
-              </button>
-            </form>
-            <Link to="/profile">
-              <User className="w-6 h-6 text-gray-600 hover:text-gray-800" />
-            </Link>
-
-            {/* Mobile toggle */}
-            <button className="md:hidden" onClick={() => setIsOpen(!isOpen)}>
-              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+        {/* Right Side */}
+        <div className="flex items-center space-x-4">
+          {/* Search Box */}
+          <form
+            onSubmit={handleSearchSubmit}
+            className="flex items-center space-x-2 bg-white rounded-lg px-2 py-1"
+          >
+            <input
+              type="text"
+              name="search"
+              placeholder="Search news..."
+              className="px-2 py-1 w-40 md:w-56 text-black focus:outline-none"
+            />
+            <button
+              type="submit"
+              className="bg-blue-600 text-white px-3 py-1 rounded-lg hover:bg-blue-500"
+            >
+              🔍
             </button>
-          </div>
+          </form>
+
+          {/* Profile */}
+          {user ? (
+            <div className="relative">
+              <button
+                onClick={() => setProfileOpen(!profileOpen)}
+                className="bg-white text-blue-700 px-4 py-2 rounded-full font-semibold hover:bg-gray-100"
+              >
+                {user.name?.split(" ")[0] || "Profile"}
+              </button>
+              {profileOpen && (
+                <div className="absolute right-0 bg-white text-black shadow-lg rounded-md mt-2 py-2 w-44">
+                  <Link
+                    to="/dashboard/profile"
+                    className="block px-4 py-2 hover:bg-gray-100"
+                    onClick={() => setProfileOpen(false)}
+                  >
+                    Profile
+                  </Link>
+                  <Link
+                    to="/dashboard/edit-profile"
+                    className="block px-4 py-2 hover:bg-gray-100"
+                    onClick={() => setProfileOpen(false)}
+                  >
+                    Edit Profile
+                  </Link>
+                  <button
+                    onClick={handleLogout}
+                    className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                  >
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <Link
+              to="/login"
+              className="bg-white text-blue-700 px-4 py-2 rounded-lg font-semibold hover:bg-gray-100"
+            >
+              Login
+            </Link>
+          )}
         </div>
 
-        {/* Mobile Menu */}
-        {isOpen && (
-          <div className="flex flex-col md:hidden py-2 space-y-2">
-            {links.map((label) => (
-              <Link
-                key={label}
-                to={`/${label.toLowerCase()}`}
-                className="block text-gray-700 hover:text-gray-900"
-                onClick={() => setIsOpen(false)}
-              >
-                {label}
-              </Link>
-            ))}
-          </div>
-        )}
+        {/* Mobile Hamburger */}
+        <button
+          className="md:hidden ml-4 text-white text-2xl"
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          ☰
+        </button>
       </div>
-    </nav>
+
+      {/* Mobile Menu */}
+      {isOpen && (
+        <div className="md:hidden bg-blue-600 text-white border-t px-6 py-4 space-y-3">
+          <Link to="/dashboard/home" className="block">
+            Home
+          </Link>
+          <Link to="/dashboard/preferences" className="block">
+            Preferences
+          </Link>
+          <Link to="/dashboard/email-logs" className="block">
+            Email Logs
+          </Link>
+          {user ? (
+            <>
+              <Link to="/dashboard/profile" className="block">
+                Profile
+              </Link>
+              <Link to="/dashboard/edit-profile" className="block">
+                Edit Profile
+              </Link>
+              <button onClick={handleLogout} className="block">
+                Logout
+              </button>
+            </>
+          ) : (
+            <Link to="/login" className="block">
+              Login
+            </Link>
+          )}
+        </div>
+      )}
+    </header>
   );
 }
