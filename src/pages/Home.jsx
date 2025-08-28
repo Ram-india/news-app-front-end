@@ -24,25 +24,25 @@ const Home = () => {
   }, []);
   return (
     <>
-    
-      <div className=' container px-8 mx-auto '>
-        <div className='grid gap-6 grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 p-4'>
-
-        {
-          loading ? (
-            <p>Loading News..</p>
-            ):(
-              <BreakingNewsSlider/>,
-              articles.map((article, index)=> <Newscard key={index} article={article}/>)
-              )
-        }
-         </div>
+      <div className="container px-8 mx-auto">
+        {loading ? (
+          <p>Loading News..</p>
+        ) : (
+          <>
+            {/* Breaking News Slider */}
+            <BreakingNewsSlider />
+  
+            {/* Articles Grid */}
+            <div className="grid gap-6 grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 p-4">
+              {articles.map((article, index) => (
+                <Newscard key={index} article={article} />
+              ))}
+            </div>
+          </>
+        )}
       </div>
-      
     </>
-
-
-  )
+  );
 }
 
 export default Home
