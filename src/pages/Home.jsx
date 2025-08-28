@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Navbar from '../components/Navbar';
 import Newscard from '../components/Newscard';
 import API from '../services/axios';
+import BreakingNewsSlider from '../components/BreakingNewsSlider';
 
 const Home = () => {
   const[articles, setArticles] = useState([]);
@@ -31,6 +32,7 @@ const Home = () => {
           loading ? (
             <p>Loading News..</p>
             ):(
+              <BreakingNewsSlider/>,
               articles.map((article, index)=> <Newscard key={index} article={article}/>)
               )
         }
