@@ -23,7 +23,7 @@ export default function Navbar() {
   };
 
   return (
-    <header className="w-full border-b bg-blue-600 text-white shadow-md sticky top-0 z-50">
+    <header className="w-full border-b bg-blue-900 text-white shadow-md sticky top-0 z-50">
       {/* Top Bar Logo */}
       <div className="container mx-auto py-2">
         <div
@@ -35,7 +35,7 @@ export default function Navbar() {
       </div>
 
       {/* Navigation */}
-      <div className="max-w-7xl mx-auto flex justify-between items-center py-2 px-6 bg-blue-700">
+      <div className="max-w-7xl mx-auto flex justify-between items-center py-2 px-6 bg-blue-800">
         {/* Desktop Nav */}
         <nav className="hidden md:flex space-x-6 font-medium">
           <Link to="/dashboard/home" className="hover:text-gray-200">
