@@ -11,11 +11,19 @@ import TickerBreakingNews from '../components/TickerBreakingNews';
 const Home = () => {
   const[articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
+  const shuffleArray = (array) => {
+    const arr = [...array]; // copy original
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]]; // swap
+    }
+    return arr;
+  };
   const fetchPersonalizedNews = async () => {
     try {
       const res = await API.get("/news/personalized");
-      console.log("API Response:", res.data); 
-      setArticles(res.data.articles || []);
+      const shuffledNews = shuffleArray(res.data)
+      setArticles(shuffledNews || []);
     } catch (err) {
       console.error("Failed to fetch personalized news:", err);
     } finally {
@@ -24,7 +32,16 @@ const Home = () => {
   };
   
   useEffect(() => {
-    fetchPersonalizedNews();
+     // Fetch news first time
+  fetchAndShuffleNews();
+
+  // Refresh every 10 minutes (600000 ms)
+  const interval = setInterval(() => {
+    fetchAndShuffleNews();
+  }, 600000);
+
+  // Cleanup interval when component unmounts
+  return () => clearInterval(interval);
   }, []);
    
   const sliderArticles = articles.slice(0, 5);
