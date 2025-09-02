@@ -41,19 +41,16 @@ const Home = () => {
           <>
            <TickerBreakingNews/>
             {/* Breaking News Slider */}
-           
-            {/* Articles Grid */}
-            <Masonry
-  breakpointCols={breakpointColumnsObj}
-  className="my-masonry-grid"
-  columnClassName="my-masonry-grid_column"
->
-  <BreakingNewsSlider articles={articles} />
-  {articles.map((article, index) => (
-    <Newscard key={index} article={article} />
-  ))}
+            <BreakingNewsSlider articles={articles} />
   
-</Masonry> 
+            {/* Articles Grid */}
+            <div className="container  px-8 mx-auto">
+              <div className="grid gap-6 grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 p-4">
+                {articles.map((article, index) => (
+                  <Newscard key={index} article={article} />
+                  ))}
+              </div>
+            </div>
           </>
         )}
       </div>
