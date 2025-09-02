@@ -55,7 +55,7 @@ const BreakingNewsSlider = ({ articles }) => {
                 <img
                   src={article.urlToImage}
                   alt={article.title}
-                  className="w-full h-60 object-cover rounded-t-xl hover:opacity-90 transition"
+                  className="absolute inset-0 w-full h-full object-cover rounded-t-xl hover:opacity-90 transition"
                 />
               </a>
             )}
@@ -86,7 +86,7 @@ const BreakingNewsSlider = ({ articles }) => {
                   rel="noopener noreferrer"
                   className="inline-block px-4 py-2 text-sm font-medium bg-red-500 text-white rounded-xl hover:bg-red-600 transition"
                 >
-                  Read More →
+                  Read More 
                 </a>
               </div>
             </div>
