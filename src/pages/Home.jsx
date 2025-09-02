@@ -3,7 +3,8 @@ import Navbar from '../components/Navbar';
 import Newscard from '../components/Newscard';
 import API from '../services/axios';
 import BreakingNewsSlider from '../components/BreakingNewsSlider';
-import BreakingNewsTicker from '../components/BreakingNewsTicker';
+import TickerBreakingNews from '../components/TickerBreakingNews';
+
 
 
 const Home = () => {
@@ -31,7 +32,7 @@ const Home = () => {
           <p>Loading News..</p>
         ) : (
           <>
-            <BreakingNewsTicker headline={breaking?.title}/>
+           <TickerBreakingNews/>
             {/* Breaking News Slider */}
             <BreakingNewsSlider articles={articles} />
   

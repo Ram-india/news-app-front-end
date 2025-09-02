@@ -6,10 +6,10 @@ import "slick-carousel/slick/slick-theme.css";
 
 const BreakingNewsSlider = ({ articles }) => {
   const settings = {
-    dots: false,
+    dots: true,
     infinite: true,
     speed: 2000,
-    slidesToShow: 3,
+    slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 2500,
