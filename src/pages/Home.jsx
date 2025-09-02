@@ -25,12 +25,6 @@ const Home = () => {
   useEffect(() => {
     fetchPersonalizedNews();
   }, []);
-   // Breakpoints for masonry
-   const breakpointColumnsObj = {
-    default: 3, // 3 columns on large screens
-    1100: 2,    // 2 columns on medium
-    700: 1      // 1 column on small
-  };
   return (
     <>
       <div>
