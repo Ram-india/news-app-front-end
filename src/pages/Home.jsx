@@ -23,6 +23,9 @@ const Home = () => {
   const fetchPersonalizedNewsAndShuffle = async () => {
     try {
       const res = await API.get("/news/personalized");
+      // If response contains { articles: [...] }
+      const newsArray = Array.isArray(res.data) ? res.data : res.data.articles;
+      console.log("API Response:", res.data);
       const shuffledNews = shuffleArray(res.data)
       setArticles(shuffledNews || []);
     } catch (err) {
