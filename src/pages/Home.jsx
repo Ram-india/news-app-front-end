@@ -12,7 +12,7 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const fetchPersonalizedNews = async () => {
     try {
-      const res = await API.get("/news/personalized");
+      const res = await API.get("/v1/news/personalized");
       console.log("API Response:", res.data); 
       setArticles(res.data.articles || []);
     } catch (err) {
