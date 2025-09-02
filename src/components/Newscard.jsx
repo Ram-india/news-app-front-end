@@ -48,7 +48,7 @@ const Newscard = ({ article }) => {
           </h2>
 
           <p className="text-xs text-gray-500 mt-1">
-          {article.source?.name || "Unknown Source"} • {formatDate(article.publishedAt)}
+          <span className="bg-gray-300">{article.source?.name || "Unknown Source"}</span> • {formatDate(article.publishedAt)}
         </p>
         </div>
       </div>
