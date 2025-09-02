@@ -26,7 +26,7 @@ const BreakingNewsSlider = ({ articles }) => {
   };
 
   return (
-    <div className="my-6 bg-gray-400">
+    <div className="">
      
       <Slider {...settings}>
         {articles.map((article, index) => (
