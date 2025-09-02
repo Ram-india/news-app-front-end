@@ -4,7 +4,6 @@ import Newscard from '../components/Newscard';
 import API from '../services/axios';
 import BreakingNewsSlider from '../components/BreakingNewsSlider';
 import TickerBreakingNews from '../components/TickerBreakingNews';
-import Masonry from "react-masonry-css";
 
 
 
@@ -33,18 +32,8 @@ const Home = () => {
     700: 1      // 1 column on small
   };
   return (
-    <>
-      <div>
-        {loading ? (
-          <p>Loading News..</p>
-        ) : (
-          <>
-           <TickerBreakingNews/>
-            {/* Breaking News Slider */}
-            <BreakingNewsSlider articles={articles} />
-  
-            {/* Articles Grid */}
-            <Masonry
+    <div className="p-4">
+      <Masonry
         breakpointCols={breakpointColumnsObj}
         className="flex gap-4"
         columnClassName="bg-clip-padding"
@@ -53,12 +42,8 @@ const Home = () => {
           <Newscard key={index} article={article} />
         ))}
       </Masonry>
-          </>
-        )}
-      </div>
-      
-    </>
+    </div>
   );
-}
+};
 
 export default Home
