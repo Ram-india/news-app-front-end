@@ -41,17 +41,18 @@ const Home = () => {
           <>
            <TickerBreakingNews/>
             {/* Breaking News Slider */}
-            <BreakingNewsSlider articles={articles} />
-  
+           
             {/* Articles Grid */}
             <Masonry
   breakpointCols={breakpointColumnsObj}
   className="my-masonry-grid"
   columnClassName="my-masonry-grid_column"
 >
+  <BreakingNewsSlider articles={articles} />
   {articles.map((article, index) => (
     <Newscard key={index} article={article} />
   ))}
+  
 </Masonry> 
           </>
         )}
