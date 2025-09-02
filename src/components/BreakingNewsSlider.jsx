@@ -55,7 +55,7 @@ const BreakingNewsSlider = ({ articles }) => {
                 <img
                   src={article.urlToImage}
                   alt={article.title}
-                  className="absolute inset-0 w-full h-full object-cover rounded-t-xl hover:opacity-90 transition"
+                  className="w-full h-72 object-cover rounded-t-xl hover:opacity-90 transition"
                 />
               </a>
             )}
