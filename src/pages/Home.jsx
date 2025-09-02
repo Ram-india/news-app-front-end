@@ -26,8 +26,8 @@ const Home = () => {
       // If response contains { articles: [...] }
       const newsArray = Array.isArray(res.data) ? res.data : res.data.articles;
       console.log("API Response:", res.data);
-      const shuffledNews = shuffleArray(res.data)
-      setArticles(shuffledNews || []);
+      const shuffledNews = shuffleArray(newsArray || []);
+      setArticles(shuffledNews);
     } catch (err) {
       console.error("Failed to fetch personalized news:", err);
     } finally {
