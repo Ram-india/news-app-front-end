@@ -4,22 +4,23 @@ import Newscard from '../components/Newscard';
 import API from '../services/axios';
 import BreakingNewsSlider from '../components/BreakingNewsSlider';
 import TickerBreakingNews from '../components/TickerBreakingNews';
-
+// Fisher–Yates Shuffle
+const shuffleArray = (array) => {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+};
 
 
 
 const Home = () => {
   const[articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
-  const shuffleArray = (array) => {
-    const arr = [...array]; // copy original
-    for (let i = arr.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [arr[i], arr[j]] = [arr[j], arr[i]]; // swap
-    }
-    return arr;
-  };
-  const fetchPersonalizedNews = async () => {
+
+  const fetchPersonalizedNewsAndShuffle = async () => {
     try {
       const res = await API.get("/news/personalized");
       const shuffledNews = shuffleArray(res.data)
@@ -33,11 +34,11 @@ const Home = () => {
   
   useEffect(() => {
      // Fetch news first time
-  fetchAndShuffleNews();
+     fetchPersonalizedNewsAndShuffle();
 
   // Refresh every 5 minutes (300000 ms)
   const interval = setInterval(() => {
-    fetchAndShuffleNews();
+    fetchPersonalizedNewsAndShuffle();
   }, 300000);
 
   // Cleanup interval when component unmounts
