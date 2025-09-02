@@ -35,10 +35,10 @@ const Home = () => {
      // Fetch news first time
   fetchAndShuffleNews();
 
-  // Refresh every 10 minutes (600000 ms)
+  // Refresh every 5 minutes (300000 ms)
   const interval = setInterval(() => {
     fetchAndShuffleNews();
-  }, 600000);
+  }, 300000);
 
   // Cleanup interval when component unmounts
   return () => clearInterval(interval);
