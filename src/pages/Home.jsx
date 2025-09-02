@@ -4,7 +4,7 @@ import Newscard from '../components/Newscard';
 import API from '../services/axios';
 import BreakingNewsSlider from '../components/BreakingNewsSlider';
 import TickerBreakingNews from '../components/TickerBreakingNews';
-import Masonry from "react-masonry-css";
+
 
 
 
@@ -26,12 +26,7 @@ const Home = () => {
   useEffect(() => {
     fetchPersonalizedNews();
   }, []);
-   // Breakpoints for masonry
-   const breakpointColumnsObj = {
-    default: 3, // 3 columns on large screens
-    1100: 2,    // 2 columns on medium
-    700: 1      // 1 column on small
-  };
+   
   return (
     <>
       <div>
