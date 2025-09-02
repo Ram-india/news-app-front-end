@@ -35,11 +35,11 @@ const Newscard = ({ article }) => {
           
 
         <div className="p-3">
-          {article.preferences && (
+          {article.category && (
             <span
               className={`inline-block px-2 py-1 text-xs font-semibold rounded-full ${categoryClass}`}
             >
-              {article.preferences}
+              {article.category}
             </span>
           )}
 
@@ -48,7 +48,7 @@ const Newscard = ({ article }) => {
           </h2>
 
           <p className="text-xs text-gray-500 mt-1">
-          <span className="bg-gray-300">{article.source?.name || "Unknown Source"}</span> • {formatDate(article.publishedAt)}
+          <span className="bg-gray-300 rounded px-2">{article.source?.name || "Unknown Source"}</span> • {formatDate(article.publishedAt)}
         </p>
         </div>
       </div>
