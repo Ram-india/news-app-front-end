@@ -1,4 +1,5 @@
 import React from "react";
+import { formateDate } from "../utils/formateDate";
 
 const categoryColors = {
   Technology: "bg-blue-100 text-blue-700",
@@ -14,8 +15,9 @@ const categoryColors = {
 const Newscard = ({ article }) => {
   const categoryClass =
     categoryColors[article.category] || categoryColors["Default"];
-
+  
   return (
+    
     <a
       href={article.url} // ensure your article object has a `url` field
       target="_blank"
@@ -47,8 +49,8 @@ const Newscard = ({ article }) => {
 
           {article.publishedAt && (
             <div className="text-xs text-gray-500 mt-1 flex items-center justify-between">
-              <div> {new Date(article.publishedAt).toLocaleDateString()}</div>
-             <div> {article.source?.name || "Unknown Source"} </div> 
+             {article.source?.name || "Unknown Source"} •{" "}
+             {article.publishedAt ? formateDate(article.publishedAt) : ""}
             </div>
           )}
         </div>
