@@ -33,7 +33,7 @@ const BreakingNewsSlider = ({ articles }) => {
       <Slider {...settings}>
         {articles.map((article, index) => (
           <div key={index} className="p-2">
-            <div className="bg-white rounded-xl shadow hover:shadow-lg transition">
+            <div className="bg-white  w-full rounded-xl shadow hover:shadow-lg transition">
               {article.urlToImage && (
                 <img
                   src={article.urlToImage}
