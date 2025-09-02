@@ -34,6 +34,7 @@ const Home = () => {
       setLoading(false);
     }
   };
+ 
   
   useEffect(() => {
      // Fetch news first time

@@ -46,10 +46,10 @@ const Newscard = ({ article }) => {
           </h2>
 
           {article.publishedAt && (
-            <p className="text-xs text-gray-500 mt-1 flex items-center justify-between">
-              {new Date(article.publishedAt).toLocaleDateString()}
-              {article.source?.name || "Unknown Source"}
-            </p>
+            <div className="text-xs text-gray-500 mt-1 flex items-center justify-between">
+              <div> {new Date(article.publishedAt).toLocaleDateString()}</div>
+             <div> {article.source?.name || "Unknown Source"} </div> 
+            </div>
           )}
         </div>
       </div>
