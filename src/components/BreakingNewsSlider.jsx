@@ -36,7 +36,7 @@ const BreakingNewsSlider = ({ articles }) => {
                 <img
                   src={article.urlToImage}
                   alt={article.title}
-                  className="w-full h-40 object-cover rounded-t-xl"
+                  className="w-full h-50 object-cover rounded-t-xl"
                 />
               )}
               <div className="p-3">
