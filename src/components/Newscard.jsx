@@ -1,5 +1,5 @@
 import React from "react";
-import { formateDate } from "../utils/formateDate";
+import { formatDate } from "../utils/formatDate";
 
 const categoryColors = {
   Technology: "bg-blue-100 text-blue-700",
@@ -31,7 +31,7 @@ const Newscard = ({ article }) => {
             alt={article.title}
             className="w-full h-40 object-cover"
           />
-          )}
+        )}
           
 
         <div className="p-3">
@@ -48,7 +48,7 @@ const Newscard = ({ article }) => {
           </h2>
 
           <p className="text-xs text-gray-500 mt-1">
-          {article.source?.name || "Unknown Source"} • {formateDate(article.publishedAt)}
+          {article.source?.name || "Unknown Source"} • {formatDate(article.publishedAt)}
         </p>
         </div>
       </div>

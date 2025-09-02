@@ -1,7 +1,9 @@
 //Utility function for date formating
-export function formateDate(dateString) {
+export function formatDate(dateString) {
     if(!dateString) return "Unknown Date";
-    const date = new Date (dateString)('en-US',{
+
+    const date = new Date(dateString)
+    return  date.toLocaleDateString('en-US',{
         year: "numeric",
         month: "short",
         day: "numeric",
