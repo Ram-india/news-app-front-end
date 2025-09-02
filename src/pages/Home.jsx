@@ -25,6 +25,12 @@ const Home = () => {
   useEffect(() => {
     fetchPersonalizedNews();
   }, []);
+   // Breakpoints for masonry
+   const breakpointColumnsObj = {
+    default: 3, // 3 columns on large screens
+    1100: 2,    // 2 columns on medium
+    700: 1      // 1 column on small
+  };
   return (
     <>
       <div>
@@ -47,6 +53,17 @@ const Home = () => {
           </>
         )}
       </div>
+      <div className="p-4">
+      <Masonry
+        breakpointCols={breakpointColumnsObj}
+        className="flex gap-4"
+        columnClassName="bg-clip-padding"
+      >
+        {articles.map((article, index) => (
+          <Newscard key={index} article={article} />
+        ))}
+      </Masonry>
+    </div>
     </>
   );
 }
