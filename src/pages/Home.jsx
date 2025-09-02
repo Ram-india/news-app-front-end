@@ -27,6 +27,8 @@ const Home = () => {
     fetchPersonalizedNews();
   }, []);
    
+  const sliderArticles = articles.slice(0, 5);
+  const gridArticles = articles.slice(5);
   return (
     <>
       <div>
@@ -36,12 +38,12 @@ const Home = () => {
           <>
            <TickerBreakingNews/>
             {/* Breaking News Slider */}
-            <BreakingNewsSlider articles={articles} />
+            <BreakingNewsSlider articles={sliderArticles} />
   
             {/* Articles Grid */}
             <div className="container  px-8 mx-auto">
               <div className="grid gap-6 grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 p-4">
-                {articles.map((article, index) => (
+                {gridArticles.map((article, index) => (
                   <Newscard key={index} article={article} />
                   ))}
               </div>
