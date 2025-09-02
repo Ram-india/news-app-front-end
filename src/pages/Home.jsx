@@ -44,7 +44,7 @@ const Home = () => {
             {/* Articles Grid */}
             <Masonry
               breakpointCols={breakpointColumnsObj}
-              className="flex gap-4"
+              className="flex gap-4 px-4 py-2"
               columnClassName="bg-clip-padding"
             >
               {articles.map((article, index) => (
