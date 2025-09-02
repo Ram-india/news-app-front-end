@@ -10,7 +10,7 @@ const Home = () => {
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        const { data } = await API.get("/v1/news"); // your backend endpoint
+        const { data } = await API.get("/news"); // your backend endpoint
         setArticles(data.articles || []);
       } catch (err) {
         console.error("Error fetching news:", err);
