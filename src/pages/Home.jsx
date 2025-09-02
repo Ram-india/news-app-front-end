@@ -43,18 +43,7 @@ const Home = () => {
             <BreakingNewsSlider articles={articles} />
   
             {/* Articles Grid */}
-            <div className="container  px-8 mx-auto">
-              <div className="grid gap-6 grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 p-4">
-                {articles.map((article, index) => (
-                  <Newscard key={index} article={article} />
-                  ))}
-              </div>
-            </div>
-          </>
-        )}
-      </div>
-      <div className="p-4">
-      <Masonry
+            <Masonry
         breakpointCols={breakpointColumnsObj}
         className="flex gap-4"
         columnClassName="bg-clip-padding"
@@ -63,7 +52,10 @@ const Home = () => {
           <Newscard key={index} article={article} />
         ))}
       </Masonry>
-    </div>
+          </>
+        )}
+      </div>
+      
     </>
   );
 }
