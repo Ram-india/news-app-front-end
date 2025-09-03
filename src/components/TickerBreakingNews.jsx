@@ -31,7 +31,7 @@ const TickerBreakingNews = ({ articles }) => {
   return (
     <div className="bg-red-600 text-white py-2 px-4 text-sm font-medium overflow-hidden flex items-center">
       {/* Fixed title on left */}
-      <div className="font-bold mr-4 flex-shrink-0">Breaking News:</div>
+      <div className="font-bold mr-4  bg-red-600 flex-shrink-0">Breaking News:</div>
 
       {/* Scrolling ticker */}
       <div
