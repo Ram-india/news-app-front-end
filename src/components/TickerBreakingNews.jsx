@@ -10,12 +10,9 @@ const TickerBreakingNews = ({ articles }) => {
         const width = tickerRef.current.scrollWidth;
 
         // Responsive speed
-        let speed = 100; // default
-        if (window.innerWidth < 640) {
-          speed = 50; // slower on mobile
-        } else if (window.innerWidth < 1024) {
-          speed = 80; // medium on tablets
-        }
+        let speed = 100;
+        if (window.innerWidth < 640) speed = 50; // mobile
+        else if (window.innerWidth < 1024) speed = 80; // tablet
 
         setDuration(width / speed);
       }
@@ -23,7 +20,6 @@ const TickerBreakingNews = ({ articles }) => {
 
     calculateDuration();
     window.addEventListener("resize", calculateDuration);
-
     return () => window.removeEventListener("resize", calculateDuration);
   }, [articles]);
 
@@ -43,16 +39,16 @@ const TickerBreakingNews = ({ articles }) => {
 
   return (
     <div
-      className="bg-red-600 text-white py-2 px-4 text-sm font-medium overflow-hidden flex items-center"
+      className="bg-red-600 text-white py-2 px-4 text-sm font-medium flex items-center"
       aria-label="Breaking News"
     >
       {/* Fixed label */}
-      <div className="font-bold mr-4 flex-shrink-0 bg-red-600 z-10 relative">
+      <div className="font-bold flex-shrink-0 bg-red-600 z-10 relative">
         Breaking News:
       </div>
 
       {/* Ticker wrapper */}
-      <div className="relative overflow-hidden flex-1">
+      <div className="relative overflow-hidden flex-1 ml-4">
         <div
           className="flex whitespace-nowrap animate-marquee"
           ref={tickerRef}
