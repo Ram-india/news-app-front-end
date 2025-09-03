@@ -2,18 +2,31 @@ import React, { useRef, useEffect, useState } from "react";
 
 const TickerBreakingNews = ({ articles }) => {
   const tickerRef = useRef(null);
-  const [duration, setDuration] = useState(20); // default duration in seconds
+  const [duration, setDuration] = useState(20);
 
-  // Calculate animation duration dynamically based on total width
   useEffect(() => {
-    if (tickerRef.current) {
-      const width = tickerRef.current.scrollWidth;
-      const speed = 100; // pixels per second
-      setDuration(width / speed);
-    }
+    const calculateDuration = () => {
+      if (tickerRef.current) {
+        const width = tickerRef.current.scrollWidth;
+
+        // Responsive speed
+        let speed = 100; // default
+        if (window.innerWidth < 640) {
+          speed = 50; // slower on mobile
+        } else if (window.innerWidth < 1024) {
+          speed = 80; // medium on tablets
+        }
+
+        setDuration(width / speed);
+      }
+    };
+
+    calculateDuration();
+    window.addEventListener("resize", calculateDuration);
+
+    return () => window.removeEventListener("resize", calculateDuration);
   }, [articles]);
 
-  // Prepare ticker items with separators
   const tickerItems = articles.map((article, index) => (
     <React.Fragment key={index}>
       <a
@@ -29,32 +42,35 @@ const TickerBreakingNews = ({ articles }) => {
   ));
 
   return (
-    <div className="bg-red-600 text-white py-2 px-4 text-sm font-medium overflow-hidden flex items-center">
-      {/* Fixed title on left */}
-      <div className="font-bold mr-4  bg-red-600 flex-shrink-0">Breaking News:</div>
+    <div
+      className="bg-red-600 text-white py-2 px-4 text-sm font-medium overflow-hidden flex items-center"
+      aria-label="Breaking News"
+    >
+      {/* Fixed label */}
+      <div className="font-bold mr-4 flex-shrink-0 bg-red-600 z-10 relative">
+        Breaking News:
+      </div>
 
-      {/* Scrolling ticker */}
-      <div
-        className="flex whitespace-nowrap animate-marquee hover:pause-marquee"
-        ref={tickerRef}
-        style={{ animationDuration: `${duration}s` }}
-      >
-        {tickerItems}
-        {tickerItems} {/* duplicate for seamless scroll */}
+      {/* Ticker wrapper */}
+      <div className="relative overflow-hidden flex-1">
+        <div
+          className="flex whitespace-nowrap animate-marquee"
+          ref={tickerRef}
+          style={{ animationDuration: `${duration}s` }}
+        >
+          {tickerItems}
+          {tickerItems}
+        </div>
       </div>
 
       <style jsx>{`
         .animate-marquee {
           display: inline-flex;
-          animation-name: marquee;
-          animation-timing-function: linear;
-          animation-iteration-count: infinite;
+          animation: marquee linear infinite;
         }
-
-        .pause-marquee {
+        .animate-marquee:hover {
           animation-play-state: paused;
         }
-
         @keyframes marquee {
           0% {
             transform: translateX(0%);
