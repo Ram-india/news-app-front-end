@@ -15,9 +15,8 @@ const categoryColors = {
 const Newscard = ({ article }) => {
   const categoryClass =
     categoryColors[article.category] || categoryColors["Default"];
-  
+
   return (
-    
     <a
       href={article.url} // ensure your article object has a `url` field
       target="_blank"
@@ -32,7 +31,6 @@ const Newscard = ({ article }) => {
             className="w-full h-40 object-cover"
           />
         )}
-          
 
         <div className="p-3">
           {article.category && (
@@ -48,8 +46,11 @@ const Newscard = ({ article }) => {
           </h2>
 
           <p className="text-xs text-gray-500 mt-1">
-          <span className="bg-gray-300 rounded px-2">{article.source?.name || "Unknown Source"}</span> • {formatDate(article.publishedAt)}
-        </p>
+            <span className="bg-gray-300 rounded px-2">
+              {article.source?.name || "Unknown Source"}
+            </span>{" "}
+            • {formatDate(article.publishedAt)}
+          </p>
         </div>
       </div>
     </a>
