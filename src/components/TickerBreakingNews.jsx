@@ -33,7 +33,7 @@ const TickerBreakingNews = ({ articles }) => {
       >
         {article.title}
       </a>
-      {index < articles.length - 1 && <span className="mx-4 text-white">•</span>}
+      {index < articles.length - 1 && <span className="mx-4 text-white"> • </span>}
     </React.Fragment>
   ));
 
