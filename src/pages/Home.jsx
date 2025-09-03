@@ -40,13 +40,6 @@ const Home = () => {
      // Fetch news first time
      fetchPersonalizedNewsAndShuffle();
 
-  // Refresh every 5 minutes (300000 ms)
-  const interval = setInterval(() => {
-    fetchPersonalizedNewsAndShuffle();
-  }, 300000);
-
-  // Cleanup interval when component unmounts
-  return () => clearInterval(interval);
   }, []);
    
   const sliderArticles = articles.slice(0, 5);
