@@ -9,7 +9,7 @@ const TickerBreakingNews = ({articles}) => {
                 <marquee >{article.title}</marquee>
             ))
         }
-        
+        working
     </div>
   )
 }
