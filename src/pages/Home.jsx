@@ -53,10 +53,10 @@ const Home = () => {
           <>
            <TickerBreakingNews/>
             {/* Breaking News Slider */}
-            <BreakingNewsSlider articles={sliderArticles} />
   
             {/* Articles Grid */}
             <div className="container  px-8 mx-auto">
+            <BreakingNewsSlider articles={sliderArticles} />
               <div className="grid gap-6 grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 p-4">
                 {gridArticles.map((article, index) => (
                   <Newscard key={index} article={article} />

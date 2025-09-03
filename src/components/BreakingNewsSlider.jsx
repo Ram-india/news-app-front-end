@@ -40,7 +40,7 @@ const BreakingNewsSlider = ({ articles }) => {
   };
 
   return (
-    <div className="w-full max-w-5xl mx-auto rounded-2xl overflow-hidden shadow-lg mb-8 mt-8 relative">
+    <div className="w-full max-w-5xl  rounded-2xl overflow-hidden shadow-lg mb-8 mt-8 relative">
       <Slider {...settings}>
         {articles.map((article, index) => (
           <div key={index} className="p-2">
