@@ -2,9 +2,9 @@ import React, { useRef, useEffect, useState } from "react";
 
 const TickerBreakingNews = ({ articles }) => {
   const tickerRef = useRef(null);
-  const [duration, setDuration] = useState(20); // default 20s
+  const [duration, setDuration] = useState(20); // default duration in seconds
 
-  // Calculate animation duration based on text width
+  // Calculate animation duration dynamically based on total width
   useEffect(() => {
     if (tickerRef.current) {
       const width = tickerRef.current.scrollWidth;
@@ -13,7 +13,7 @@ const TickerBreakingNews = ({ articles }) => {
     }
   }, [articles]);
 
-  // Add separator between articles
+  // Prepare ticker items with separators
   const tickerItems = articles.map((article, index) => (
     <React.Fragment key={index}>
       <a
@@ -30,11 +30,13 @@ const TickerBreakingNews = ({ articles }) => {
 
   return (
     <div className="bg-red-600 text-white py-2 px-4 text-sm font-medium overflow-hidden flex items-center">
-      <span className="font-bold mr-4 flex-shrink-0">Breaking News:</span>
+      {/* Fixed title on left */}
+      <div className="font-bold mr-4 flex-shrink-0">Breaking News:</div>
 
+      {/* Scrolling ticker */}
       <div
-        ref={tickerRef}
         className="flex whitespace-nowrap animate-marquee hover:pause-marquee"
+        ref={tickerRef}
         style={{ animationDuration: `${duration}s` }}
       >
         {tickerItems}
