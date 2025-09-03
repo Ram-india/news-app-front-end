@@ -41,9 +41,9 @@ const Home = () => {
      fetchPersonalizedNewsAndShuffle();
 
   }, []);
-   
-  const sliderArticles = articles.slice(0, 5);
-  const gridArticles = articles.slice(5);
+  const tickerArticles = articles.slice(0, 2)
+  const sliderArticles = articles.slice(3, 7);
+  const gridArticles = articles.slice(7);
   return (
     <>
       <div>
@@ -51,7 +51,7 @@ const Home = () => {
           <p>Loading News..</p>
         ) : (
           <>
-           <TickerBreakingNews/>
+           <TickerBreakingNews articles={tickerArticles}/>
             {/* Breaking News Slider */}
   
             {/* Articles Grid */}
