@@ -12,16 +12,22 @@ const categoryColors = {
   Default: "bg-gray-100 text-gray-700",
 };
 
+const normalizeCategory = (category) => {
+  if (!category) return "Default";
+  // Capitalize first letter, lowercase the rest
+  return category.charAt(0).toUpperCase() + category.slice(1).toLowerCase();
+};
+
 const Newscard = ({ article }) => {
-  const categoryClass =
-    categoryColors[article.category] || categoryColors["Default"];
+  const normalizedCategory = normalizeCategory(article.category);
+  const categoryClass = categoryColors[normalizedCategory] || categoryColors["Default"];
 
   return (
     <a
-      href={article.url} // ensure your article object has a `url` field
+      href={article.url} 
       target="_blank"
       rel="noopener noreferrer"
-      className="block" // makes the link behave like a block container
+      className="block"
     >
       <div className="bg-white shadow-md rounded-xl overflow-hidden hover:shadow-lg hover:scale-[1.02] transition duration-300 cursor-pointer">
         {article.urlToImage && (
@@ -32,12 +38,12 @@ const Newscard = ({ article }) => {
           />
         )}
 
-        <div className="p-3">
+        <div className="">
           {article.category && (
             <span
               className={`inline-block px-2 py-1 text-xs font-semibold rounded-full ${categoryClass}`}
             >
-              {article.category}
+              {normalizedCategory}
             </span>
           )}
 
