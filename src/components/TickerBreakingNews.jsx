@@ -24,19 +24,17 @@ const TickerBreakingNews = ({ articles }) => {
       >
         {article.title}
       </a>
-      {index < articles.length - 1 && (
-        <span className="mx-4 text-white">•</span> // separator dot
-      )}
+      {index < articles.length - 1 && <span className="mx-4 text-white">•</span>}
     </React.Fragment>
   ));
 
   return (
-    <div className="bg-red-600 text-white py-2 px-4 text-sm font-medium overflow-hidden relative">
-      <span className="font-bold mr-4">Breaking News:</span>
+    <div className="bg-red-600 text-white py-2 px-4 text-sm font-medium overflow-hidden flex items-center">
+      <span className="font-bold mr-4 flex-shrink-0">Breaking News:</span>
 
       <div
         ref={tickerRef}
-        className="absolute flex animate-marquee hover:pause-marquee"
+        className="flex whitespace-nowrap animate-marquee hover:pause-marquee"
         style={{ animationDuration: `${duration}s` }}
       >
         {tickerItems}
