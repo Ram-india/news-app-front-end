@@ -29,7 +29,7 @@ const Newscard = ({ article }) => {
       rel="noopener noreferrer"
       className="block"
     >
-      <div className="bg-white shadow-md rounded-xl overflow-hidden hover:shadow-lg hover:scale-[1.02] transition duration-300 cursor-pointer">
+      <div className="bg-white p-2 shadow-md rounded-xl overflow-hidden hover:shadow-lg hover:scale-[1.02] transition duration-300 cursor-pointer">
         {article.urlToImage && (
           <img
             src={article.urlToImage}

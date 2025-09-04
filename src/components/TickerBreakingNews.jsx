@@ -39,11 +39,11 @@ const TickerBreakingNews = ({ articles }) => {
 
   return (
     <div
-      className="bg-red-600 text-white py-2 px-4 text-sm font-medium flex items-center"
+      className="bg-red-500 text-white py-1 px-4 text-sm font-medium flex items-center"
       aria-label="Breaking News"
     >
       {/* Fixed label */}
-      <div className="font-bold flex-shrink-0 bg-red-600 z-10 relative">
+      <div className="font-bold flex-shrink-0 bg-red-500 z-10 relative">
         Breaking News:
       </div>
 
