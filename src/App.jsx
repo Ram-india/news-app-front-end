@@ -11,9 +11,9 @@ import PrivateRoute from "./routes/PrivateRoute";
 import Emailogs from "./components/Emailogs";
 import EditProfile from "./pages/EditProfile";
 import ForgotPassword from "./pages/ForgetPassword";
-import ResetPassword from "./pages/resetPassword";
-import Navbar from "./components/Navbar"; // 
+import Navbar from "./components/Navbar"; 
 import SearchResults from "./pages/SearchResults";
+import ResetPassword from "./pages/resetPassword";
 
 const App = () => {
   const { user } = useAuth();
@@ -30,7 +30,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password/:token" element={<ResetPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword/>}/>
         <Route path="/dashboard/search" element={<SearchResults />} />
 
         {/* Protected Dashboard Routes */}
