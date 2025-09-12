@@ -1,5 +1,6 @@
 import React from "react";
 import { formatDate } from "../utils/formatDate";
+import { useNavigate } from "react-router-dom";
 
 const categoryColors = {
   Technology: "bg-blue-100 text-blue-700",
@@ -19,17 +20,20 @@ const normalizeCategory = (category) => {
 };
 
 const Newscard = ({ article }) => {
+  const navigate = useNavigate();
+  const openDetails = () => {
+    navigate(`/news/${encodeURIComponent(article.title)}`, {
+      state: { article }, // pass article as state
+    });
+  }
   const normalizedCategory = normalizeCategory(article.category);
   const categoryClass = categoryColors[normalizedCategory] || categoryColors["Default"];
 
   return (
-    <a
-      href={article.url} 
-      target="_blank"
-      rel="noopener noreferrer"
-      className="block"
-    >
-      <div className="bg-white p-2 shadow-md rounded-xl overflow-hidden hover:shadow-lg hover:scale-[1.02] transition duration-300 cursor-pointer">
+    
+      <div 
+      onClick={openDetails}
+      className="bg-white p-2 shadow-md rounded-xl overflow-hidden hover:shadow-lg hover:scale-[1.02] transition duration-300 cursor-pointer">
         {article.urlToImage && (
           <img
             src={article.urlToImage}
@@ -59,7 +63,7 @@ const Newscard = ({ article }) => {
           </p>
         </div>
       </div>
-    </a>
+   
   );
 };
 

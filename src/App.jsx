@@ -14,6 +14,7 @@ import ForgotPassword from "./pages/ForgetPassword";
 import Navbar from "./components/Navbar"; 
 import SearchResults from "./pages/SearchResults";
 import ResetPassword from "./pages/resetPassword";
+import NewsDetail from "./pages/NewsDetail";
 
 const App = () => {
   const { user } = useAuth();
@@ -42,6 +43,15 @@ const App = () => {
             </PrivateRoute>
           }
         />
+        <Route
+          path="/dashboard/news/:id"
+          element={
+            <PrivateRoute>
+              <NewsDetail/>
+            </PrivateRoute>
+          }
+        />
+
         <Route
           path="/dashboard/preferences"
           element={
