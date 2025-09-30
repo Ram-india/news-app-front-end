@@ -33,19 +33,14 @@ const NewsDetail = () => {
     (a) => a._id !== article._id && a.category?.toLowerCase() === article.category?.toLowerCase()
   );
 
-  // Slider articles (top 5 excluding current)
+  // Slider articles: top 5 other articles excluding current
   const sliderArticles = allArticles.filter(a => a._id !== article._id).slice(0, 5);
 
   return (
     <div className="container mx-auto px-4 py-6">
+      {/* Article Title */}
       <h1 className="text-2xl font-bold mb-4">{article.title}</h1>
 
-      {/* News Slider */}
-      {sliderArticles.length > 0 && (
-        <div className="my-6">
-          <BreakingNewsSlider articles={sliderArticles} />
-        </div>
-      )}
 
       {/* Main Image */}
       {article.urlToImage && (
@@ -61,6 +56,7 @@ const NewsDetail = () => {
       {/* Full Content */}
       <p className="text-lg mb-4">{displayContent}</p>
 
+      {/* Source Link */}
       {article.url && (
         <a
           href={article.url}
@@ -77,32 +73,11 @@ const NewsDetail = () => {
         <strong>Published:</strong> {new Date(article.publishedAt).toLocaleString()}
       </p>
 
-      {/* Related Articles */}
+      {/* Related Articles Slider */}
       {relatedArticles.length > 0 && (
         <>
           <h2 className="text-xl font-bold mt-8 mb-4">Related Articles</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {relatedArticles.map((rel) => (
-              <div
-                key={rel._id}
-                onClick={() =>
-                  navigate(`/dashboard/news/${rel._id}`, {
-                    state: { article: rel, allArticles },
-                  })
-                }
-                className="cursor-pointer bg-white shadow-md rounded p-2 hover:shadow-lg transition"
-              >
-                {rel.urlToImage && (
-                  <img
-                    src={rel.urlToImage}
-                    alt={rel.title}
-                    className="w-full h-auto rounded"
-                  />
-                )}
-                <h3 className="text-sm font-semibold mt-2 line-clamp-2">{rel.title}</h3>
-              </div>
-            ))}
-          </div>
+          <BreakingNewsSlider articles={relatedArticles} />
         </>
       )}
     </div>
