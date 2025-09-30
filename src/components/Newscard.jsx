@@ -1,6 +1,6 @@
 import React from "react";
-import { formatDate } from "../utils/formatDate";
 import { useNavigate } from "react-router-dom";
+import { formatDate } from "../utils/formatDate";
 
 const categoryColors = {
   Technology: "bg-blue-100 text-blue-700",
@@ -15,16 +15,15 @@ const categoryColors = {
 
 const normalizeCategory = (category) => {
   if (!category) return "Default";
-  // Capitalize first letter, lowercase the rest
   return category.charAt(0).toUpperCase() + category.slice(1).toLowerCase();
 };
+
 const Newscard = ({ article }) => {
   const navigate = useNavigate();
 
   const openDetails = () => {
-    console.log(article);
-    navigate(`/dashboard/news/${article._id}`, {   //  use ID in the URL
-      state: { article },                          // pass article for fast load
+    navigate(`/dashboard/news/${article._id}`, {
+      state: { article },
     });
   };
 
@@ -44,7 +43,6 @@ const Newscard = ({ article }) => {
           className="w-full h-40 object-cover"
         />
       )}
-
       <div>
         {article.category && (
           <span
@@ -53,11 +51,9 @@ const Newscard = ({ article }) => {
             {normalizedCategory}
           </span>
         )}
-
         <h2 className="mt-2 text-sm font-bold text-gray-800 line-clamp-2">
           {article.title}
         </h2>
-
         <p className="text-xs text-gray-500 mt-1">
           <span className="bg-gray-300 rounded px-2">
             {article.source?.name || "Unknown Source"}

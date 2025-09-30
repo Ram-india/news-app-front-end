@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react'
-import Navbar from '../components/Navbar';
-import Newscard from '../components/Newscard';
-import API from '../services/axios';
-import BreakingNewsSlider from '../components/BreakingNewsSlider';
-import TickerBreakingNews from '../components/TickerBreakingNews';
+import React, { useEffect, useState } from "react";
+import Navbar from "../components/Navbar";
+import Newscard from "../components/Newscard";
+import API from "../services/axios";
+import BreakingNewsSlider from "../components/BreakingNewsSlider";
+import TickerBreakingNews from "../components/TickerBreakingNews";
+import { v4 as uuidv4 } from "uuid";
+
 // Fisher–Yates Shuffle
 const shuffleArray = (array) => {
   const arr = [...array];
@@ -14,53 +16,57 @@ const shuffleArray = (array) => {
   return arr;
 };
 
-
-
 const Home = () => {
-  const[articles, setArticles] = useState([]);
+  const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const fetchPersonalizedNewsAndShuffle = async () => {
     try {
       const res = await API.get("/news/personalized");
-      // If response contains { articles: [...] }
       const newsArray = Array.isArray(res.data) ? res.data : res.data.articles;
       console.log("API Response:", res.data);
-      const shuffledNews = shuffleArray(newsArray || []);
+
+      // Add unique ID to each article
+      const articlesWithId = (newsArray || []).map((article) => ({
+        ...article,
+        _id: uuidv4(),
+      }));
+
+      const shuffledNews = shuffleArray(articlesWithId);
       setArticles(shuffledNews);
+
+      // Store in localStorage for refresh
+      localStorage.setItem("articles", JSON.stringify(shuffledNews));
     } catch (err) {
       console.error("Failed to fetch personalized news:", err);
     } finally {
       setLoading(false);
     }
   };
- 
-  
-  useEffect(() => {
-     // Fetch news first time
-     fetchPersonalizedNewsAndShuffle();
 
+  useEffect(() => {
+    fetchPersonalizedNewsAndShuffle();
   }, []);
-  const tickerArticles = articles.slice(0, 2)
+
+  const tickerArticles = articles.slice(0, 2);
   const sliderArticles = articles.slice(3, 7);
   const gridArticles = articles.slice(7);
+
   return (
     <>
+      <Navbar />
       <div>
         {loading ? (
-          <p>Loading News..</p>
+          <p>Loading News...</p>
         ) : (
           <>
-           <TickerBreakingNews articles={tickerArticles}/>
-            {/* Breaking News Slider */}
-  
-            {/* Articles Grid */}
-            <div className="container  px-8 mx-auto">
+            <TickerBreakingNews articles={tickerArticles} />
             <BreakingNewsSlider articles={sliderArticles} />
+            <div className="container px-8 mx-auto">
               <div className="grid gap-6 grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 p-4">
-                {gridArticles.map((article, index) => (
-                  <Newscard key={index} article={article} />
-                  ))}
+                {gridArticles.map((article) => (
+                  <Newscard key={article._id} article={article} />
+                ))}
               </div>
             </div>
           </>
@@ -68,6 +74,6 @@ const Home = () => {
       </div>
     </>
   );
-}
+};
 
-export default Home
+export default Home;
