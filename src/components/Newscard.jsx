@@ -18,52 +18,53 @@ const normalizeCategory = (category) => {
   // Capitalize first letter, lowercase the rest
   return category.charAt(0).toUpperCase() + category.slice(1).toLowerCase();
 };
-
 const Newscard = ({ article }) => {
   const navigate = useNavigate();
+
   const openDetails = () => {
-    navigate(`/news/${encodeURIComponent(article.title)}`, {
-      state: { article }, // pass article as state
+    navigate(`/dashboard/news/${article._id}`, {   //  use ID in the URL
+      state: { article },                          // pass article for fast load
     });
-  }
+  };
+
   const normalizedCategory = normalizeCategory(article.category);
-  const categoryClass = categoryColors[normalizedCategory] || categoryColors["Default"];
+  const categoryClass =
+    categoryColors[normalizedCategory] || categoryColors["Default"];
 
   return (
-    
-      <div 
+    <div
       onClick={openDetails}
-      className="bg-white p-2 shadow-md rounded-xl overflow-hidden hover:shadow-lg hover:scale-[1.02] transition duration-300 cursor-pointer">
-        {article.urlToImage && (
-          <img
-            src={article.urlToImage}
-            alt={article.title}
-            className="w-full h-40 object-cover"
-          />
+      className="bg-white p-2 shadow-md rounded-xl overflow-hidden hover:shadow-lg hover:scale-[1.02] transition duration-300 cursor-pointer"
+    >
+      {article.urlToImage && (
+        <img
+          src={article.urlToImage}
+          alt={article.title}
+          className="w-full h-40 object-cover"
+        />
+      )}
+
+      <div>
+        {article.category && (
+          <span
+            className={`inline-block px-2 py-1 text-xs font-semibold rounded-full ${categoryClass}`}
+          >
+            {normalizedCategory}
+          </span>
         )}
 
-        <div className="">
-          {article.category && (
-            <span
-              className={`inline-block px-2 py-1 text-xs font-semibold rounded-full ${categoryClass}`}
-            >
-              {normalizedCategory}
-            </span>
-          )}
+        <h2 className="mt-2 text-sm font-bold text-gray-800 line-clamp-2">
+          {article.title}
+        </h2>
 
-          <h2 className="mt-2 text-sm font-bold text-gray-800 line-clamp-2">
-            {article.title}
-          </h2>
-
-          <p className="text-xs text-gray-500 mt-1">
-            <span className="bg-gray-300 rounded px-2">
-              {article.source?.name || "Unknown Source"}
-            </span>{" "}
-            • {formatDate(article.publishedAt)}
-          </p>
-        </div>
+        <p className="text-xs text-gray-500 mt-1">
+          <span className="bg-gray-300 rounded px-2">
+            {article.source?.name || "Unknown Source"}
+          </span>{" "}
+          • {formatDate(article.publishedAt)}
+        </p>
       </div>
-   
+    </div>
   );
 };
 

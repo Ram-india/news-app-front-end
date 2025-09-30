@@ -10,8 +10,8 @@ import Profile from "./pages/Profile";
 import PrivateRoute from "./routes/PrivateRoute";
 import Emailogs from "./components/Emailogs";
 import EditProfile from "./pages/EditProfile";
-import ForgotPassword from "./pages/ForgetPassword";
-import Navbar from "./components/Navbar"; 
+import ForgetPassword from "./pages/ForgetPassword";
+import Navbar from "./components/Navbar";
 import SearchResults from "./pages/SearchResults";
 import ResetPassword from "./pages/resetPassword";
 import NewsDetail from "./pages/NewsDetail";
@@ -21,7 +21,7 @@ const App = () => {
 
   return (
     <>
-      <Toaster position="middle-left" />
+      <Toaster position="top-left" />
 
       {/* Top Navbar is always visible if user is logged in */}
       {user && <Navbar />}
@@ -30,8 +30,8 @@ const App = () => {
         {/* Public Routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password/:token" element={<ResetPassword/>}/>
+        <Route path="/forgot-password" element={<ForgetPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
         <Route path="/dashboard/search" element={<SearchResults />} />
 
         {/* Protected Dashboard Routes */}
@@ -43,11 +43,21 @@ const App = () => {
             </PrivateRoute>
           }
         />
+
         <Route
           path="/dashboard/news/:id"
           element={
             <PrivateRoute>
-              <NewsDetail/>
+              <NewsDetail />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/dashboard/search"
+          element={
+            <PrivateRoute>
+              <SearchResults />
             </PrivateRoute>
           }
         />
