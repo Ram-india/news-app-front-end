@@ -23,7 +23,7 @@ const Newscard = ({ article, allArticles }) => {
 
   const openDetails = () => {
     navigate(`/dashboard/news/${article._id}`, {
-      state: { article, allArticles},
+      state: { article, allArticles: JSON.parse(localStorage.getItem("articles"))},
     });
   };
 

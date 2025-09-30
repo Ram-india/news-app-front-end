@@ -28,17 +28,16 @@ const NewsDetail = () => {
       ? article.content
       : article.description || "No content available";
 
-  // Related articles
+  // Related articles: same category, different ID
   const relatedArticles = allArticles.filter(
-    (a) => a._id !== article._id && a.category === article.category
+    (a) => a._id !== article._id && a.category?.toLowerCase() === article.category?.toLowerCase()
   );
 
-  // Slider articles (exclude current)
+  // Slider articles (top 5 excluding current)
   const sliderArticles = allArticles.filter(a => a._id !== article._id).slice(0, 5);
 
   return (
     <div className="container mx-auto px-4 py-6">
-      {/* Title */}
       <h1 className="text-2xl font-bold mb-4">{article.title}</h1>
 
       {/* News Slider */}

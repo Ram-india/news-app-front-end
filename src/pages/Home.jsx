@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import Navbar from '../components/Navbar';
-import Newscard from '../components/Newscard';
-import API from '../services/axios';
-import BreakingNewsSlider from '../components/BreakingNewsSlider';
-import TickerBreakingNews from '../components/TickerBreakingNews';
+import React, { useEffect, useState } from "react";
+import Navbar from "../components/Navbar";
+import Newscard from "../components/Newscard";
+import API from "../services/axios";
+import BreakingNewsSlider from "../components/BreakingNewsSlider";
+import TickerBreakingNews from "../components/TickerBreakingNews";
+import { v4 as uuidv4 } from "uuid";
 
 // Fisher–Yates Shuffle
 const shuffleArray = (array) => {
@@ -23,15 +24,24 @@ const Home = () => {
     try {
       const res = await API.get("/news/personalized");
       const newsArray = Array.isArray(res.data) ? res.data : res.data.articles;
-      const shuffledNews = shuffleArray(newsArray || []);
+
+      // Assign unique _id for each article
+      const articlesWithId = newsArray.map(article => ({
+        ...article,
+        _id: article._id || uuidv4()
+      }));
+
+      // Shuffle articles
+      const shuffledNews = shuffleArray(articlesWithId);
+
       setArticles(shuffledNews);
 
-      // Store articles in localStorage for NewsDetail page
+      // Save all articles in localStorage for detail page
       localStorage.setItem("articles", JSON.stringify(shuffledNews));
 
-      console.log("✅ API Response:", shuffledNews);
+      console.log("API Response:", shuffledNews);
     } catch (err) {
-      console.error("❌ Failed to fetch personalized news:", err);
+      console.error("Failed to fetch personalized news:", err);
     } finally {
       setLoading(false);
     }
@@ -48,7 +58,7 @@ const Home = () => {
   return (
     <>
       {loading ? (
-        <p>Loading News..</p>
+        <p className="text-center mt-6">Loading News...</p>
       ) : (
         <>
           <TickerBreakingNews articles={tickerArticles} />
