@@ -24,7 +24,7 @@ const Home = () => {
     try {
       const res = await API.get("/news/personalized");
       const newsArray = Array.isArray(res.data) ? res.data : res.data.articles;
-      console.log("API Response:", res.data);
+    
 
       // Add unique ID to each article
       const articlesWithId = (newsArray || []).map((article) => ({
