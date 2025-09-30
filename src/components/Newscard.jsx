@@ -22,6 +22,7 @@ const Newscard = ({ article }) => {
   const navigate = useNavigate();
 
   const openDetails = () => {
+    console.log(article);
     navigate(`/dashboard/news/${article._id}`, {   //  use ID in the URL
       state: { article },                          // pass article for fast load
     });
