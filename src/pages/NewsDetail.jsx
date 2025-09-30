@@ -10,15 +10,16 @@ const NewsDetail = () => {
   const [article, setArticle] = useState(location.state?.article || null);
   const [allArticles, setAllArticles] = useState(location.state?.allArticles || []);
 
-  // Update article when route changes and fetch from localStorage only on client
+  // Update article whenever id changes
   useEffect(() => {
-    if (!article && id && typeof window !== "undefined") {
+    if (typeof window !== "undefined") {
       const storedArticles = JSON.parse(localStorage.getItem("articles")) || [];
       const foundArticle = storedArticles.find((a) => a._id === id);
       setArticle(foundArticle);
       setAllArticles(storedArticles);
+      window.scrollTo({ top: 0, behavior: "smooth" }); // scroll to top on article change
     }
-  }, [id, article]);
+  }, [id]);
 
   if (!article) return <div>No article found.</div>;
 
@@ -27,7 +28,7 @@ const NewsDetail = () => {
       ? article.content
       : article.description || "No content available";
 
-  // Determine next article for the button
+  // Determine next article for button
   const currentIndex = allArticles.findIndex((a) => a._id === article._id);
   const nextArticle = allArticles[currentIndex + 1] || allArticles[0];
 
@@ -35,9 +36,6 @@ const NewsDetail = () => {
     navigate(`/dashboard/news/${nextArticle._id}`, {
       state: { article: nextArticle, allArticles },
     });
-    if (typeof window !== "undefined") {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
   };
 
   return (
