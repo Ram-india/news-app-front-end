@@ -16,9 +16,16 @@ const NewsDetail = () => {
 
   if (!article) return <div>No article found.</div>;
 
+  // Determine content to display
+  const displayContent =
+    article.content && !article.content.includes("[+")
+      ? article.content
+      : article.description || "No content available";
+
   return (
     <div className="container mx-auto px-4 py-6">
       <h1 className="text-2xl font-bold mb-4">{article.title}</h1>
+
       {article.urlToImage && (
         <img
           src={article.urlToImage}
@@ -26,10 +33,25 @@ const NewsDetail = () => {
           className="w-full h-96 object-cover mb-4 rounded-xl"
         />
       )}
-      <p className="text-lg mb-4">{article.content || article.description}</p>
-      <p className="text-gray-600 text-sm">
+
+      <p className="text-lg mb-4">{displayContent}</p>
+
+      {/* Link to full article */}
+      {article.url && (
+        <a
+          href={article.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-blue-600 underline"
+        >
+          Read Full Article
+        </a>
+      )}
+
+      <p className="text-gray-600 text-sm mt-4">
         <strong>Author:</strong> {article.author || "Unknown"} |{" "}
-        <strong>Published:</strong> {new Date(article.publishedAt).toLocaleString()}
+        <strong>Published:</strong>{" "}
+        {new Date(article.publishedAt).toLocaleString()}
       </p>
     </div>
   );

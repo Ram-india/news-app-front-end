@@ -44,7 +44,7 @@ const BreakingNewsSlider = ({ articles }) => {
 
   return (
     <div
-      className="w-full max-w-5xl rounded-2xl overflow-hidden shadow-lg mb-8 mt-8 relative"
+      className="w-full max-w-5xl mx-auto rounded-2xl overflow-hidden shadow-lg mb-8 mt-8 relative"
       aria-label="Breaking news slider"
     >
       <Slider {...settings}>
