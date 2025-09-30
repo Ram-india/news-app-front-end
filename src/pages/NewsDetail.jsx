@@ -1,41 +1,36 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useLocation, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { ArrowRightIcon } from "@heroicons/react/24/solid";
 
 const NewsDetail = () => {
   const { id } = useParams();
-  const location = useLocation();
   const navigate = useNavigate();
 
-  const [article, setArticle] = useState(location.state?.article || null);
-  const [allArticles, setAllArticles] = useState(location.state?.allArticles || []);
+  const [article, setArticle] = useState(null);
+  const [allArticles, setAllArticles] = useState([]);
 
-  // Update article whenever id changes
+  // Always load article based on ID
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const storedArticles = JSON.parse(localStorage.getItem("articles")) || [];
-      const foundArticle = storedArticles.find((a) => a._id === id);
-      setArticle(foundArticle);
-      setAllArticles(storedArticles);
-      window.scrollTo({ top: 0, behavior: "smooth" }); // scroll to top on article change
-    }
-  }, [id]);
+    const storedArticles = JSON.parse(localStorage.getItem("articles")) || [];
+    const foundArticle = storedArticles.find((a) => a._id === id);
+    setArticle(foundArticle);
+    setAllArticles(storedArticles);
+    window.scrollTo({ top: 0, behavior: "smooth" }); // scroll to top on article change
+  }, [id]); // runs whenever `id` changes
 
-  if (!article) return <div>No article found.</div>;
+  if (!article) return <div className="text-center mt-6">No article found.</div>;
 
   const displayContent =
     article.content && !article.content.includes("[+")
       ? article.content
       : article.description || "No content available";
 
-  // Determine next article for button
+  // Find next article (loop back to first)
   const currentIndex = allArticles.findIndex((a) => a._id === article._id);
   const nextArticle = allArticles[currentIndex + 1] || allArticles[0];
 
   const handleNextNews = () => {
-    navigate(`/dashboard/news/${nextArticle._id}`, {
-      state: { article: nextArticle, allArticles },
-    });
+    navigate(`/dashboard/news/${nextArticle._id}`); // don't pass state
   };
 
   return (
@@ -64,7 +59,7 @@ const NewsDetail = () => {
           </a>
         )}
 
-        {/* Read Next News Button */}
+        {/* Next News Button */}
         {allArticles.length > 1 && (
           <div className="mt-6">
             <button
