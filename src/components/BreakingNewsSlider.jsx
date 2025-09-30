@@ -30,10 +30,11 @@ const PrevArrow = ({ onClick }) => (
 const BreakingNewsSlider = ({ articles }) => {
   const settings = {
     dots: true,
-    infinite: true,
-    speed: 1200,
-    slidesToShow: 1,
-    slidesToScroll: 1,
+    arrows: true,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 3,
     autoplay: true,
     autoplaySpeed: 4000,
     fade: true,
