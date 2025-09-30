@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import RelatedArticlesSlider from "../components/RelatedArticlesSlider";
+import API from "../api"; // make sure you import your API instance
 
 const NewsDetail = () => {
   const { id } = useParams();
@@ -8,7 +9,26 @@ const NewsDetail = () => {
 
   const [article, setArticle] = useState(location.state?.article || null);
   const [allArticles, setAllArticles] = useState(location.state?.allArticles || []);
+  const [relatedArticles, setRelatedArticles] = useState([]);
 
+  // Fetch related when article changes
+  useEffect(() => {
+    if (article?.category) {
+      const fetchRelated = async () => {
+        try {
+          const res = await API.get(`/news/related?category=${article.category}`);
+          setRelatedArticles(
+            (res.data.articles || []).filter((a) => a._id !== article._id)
+          );
+        } catch (err) {
+          console.error("Failed to fetch related articles:", err);
+        }
+      };
+      fetchRelated();
+    }
+  }, [article]);
+
+  // Get article if refreshing or navigating by URL
   useEffect(() => {
     if (!article && id) {
       const storedArticles = JSON.parse(localStorage.getItem("articles")) || [];
@@ -24,11 +44,6 @@ const NewsDetail = () => {
     article.content && !article.content.includes("[+")
       ? article.content
       : article.description || "No content available";
-
-  // Related articles (same category, excluding current)
-  const relatedArticles = allArticles.filter(
-    (a) => a._id !== article._id && a.category?.toLowerCase() === article.category?.toLowerCase()
-  );
 
   return (
     <div className="container mx-auto px-4 py-6">
