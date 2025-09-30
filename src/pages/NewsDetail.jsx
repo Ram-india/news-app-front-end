@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import RelatedArticlesSlider from "../components/RelatedArticlesSlider";
-import API from "../api"; // make sure you import your API instance
+import API from "../services/axios";
 
 const NewsDetail = () => {
   const { id } = useParams();
@@ -11,14 +11,14 @@ const NewsDetail = () => {
   const [allArticles, setAllArticles] = useState(location.state?.allArticles || []);
   const [relatedArticles, setRelatedArticles] = useState([]);
 
-  // Fetch related when article changes
   useEffect(() => {
     if (article?.category) {
       const fetchRelated = async () => {
         try {
           const res = await API.get(`/news/related?category=${article.category}`);
+          //  Use this state instead of redefining
           setRelatedArticles(
-            (res.data.articles || []).filter((a) => a._id !== article._id)
+            res.data.articles.filter((a) => a._id !== article._id)
           );
         } catch (err) {
           console.error("Failed to fetch related articles:", err);
@@ -28,7 +28,6 @@ const NewsDetail = () => {
     }
   }, [article]);
 
-  // Get article if refreshing or navigating by URL
   useEffect(() => {
     if (!article && id) {
       const storedArticles = JSON.parse(localStorage.getItem("articles")) || [];
@@ -47,7 +46,6 @@ const NewsDetail = () => {
 
   return (
     <div className="container mx-auto px-4 py-6">
-      {/* Top Section */}
       <div className="max-w-4xl mx-auto mb-8">
         <h1 className="text-3xl font-bold mb-4">{article.title}</h1>
 
@@ -73,7 +71,6 @@ const NewsDetail = () => {
         )}
       </div>
 
-      {/* Related Articles Slider */}
       {relatedArticles.length > 0 && (
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl font-bold mb-4">Related Articles</h2>
