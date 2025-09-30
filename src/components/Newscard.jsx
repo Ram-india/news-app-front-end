@@ -18,12 +18,12 @@ const normalizeCategory = (category) => {
   return category.charAt(0).toUpperCase() + category.slice(1).toLowerCase();
 };
 
-const Newscard = ({ article }) => {
+const Newscard = ({ article, allArticles }) => {
   const navigate = useNavigate();
 
   const openDetails = () => {
     navigate(`/dashboard/news/${article._id}`, {
-      state: { article },
+      state: { article, allArticles},
     });
   };
 

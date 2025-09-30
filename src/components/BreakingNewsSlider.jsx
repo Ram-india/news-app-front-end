@@ -41,6 +41,7 @@ const BreakingNewsSlider = ({ articles }) => {
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
   };
+  
 
   return (
     <div

@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
-import Navbar from "../components/Navbar";
-import Newscard from "../components/Newscard";
-import API from "../services/axios";
-import BreakingNewsSlider from "../components/BreakingNewsSlider";
-import TickerBreakingNews from "../components/TickerBreakingNews";
-import { v4 as uuidv4 } from "uuid";
+import React, { useEffect, useState } from 'react';
+import Navbar from '../components/Navbar';
+import Newscard from '../components/Newscard';
+import API from '../services/axios';
+import BreakingNewsSlider from '../components/BreakingNewsSlider';
+import TickerBreakingNews from '../components/TickerBreakingNews';
 
 // Fisher–Yates Shuffle
 const shuffleArray = (array) => {
@@ -24,21 +23,15 @@ const Home = () => {
     try {
       const res = await API.get("/news/personalized");
       const newsArray = Array.isArray(res.data) ? res.data : res.data.articles;
-    
-
-      // Add unique ID to each article
-      const articlesWithId = (newsArray || []).map((article) => ({
-        ...article,
-        _id: uuidv4(),
-      }));
-
-      const shuffledNews = shuffleArray(articlesWithId);
+      const shuffledNews = shuffleArray(newsArray || []);
       setArticles(shuffledNews);
 
-      // Store in localStorage for refresh
+      // Store articles in localStorage for NewsDetail page
       localStorage.setItem("articles", JSON.stringify(shuffledNews));
+
+      console.log("✅ API Response:", shuffledNews);
     } catch (err) {
-      console.error("Failed to fetch personalized news:", err);
+      console.error("❌ Failed to fetch personalized news:", err);
     } finally {
       setLoading(false);
     }
@@ -54,24 +47,21 @@ const Home = () => {
 
   return (
     <>
-     
-      <div>
-        {loading ? (
-          <p>Loading News...</p>
-        ) : (
-          <>
-            <TickerBreakingNews articles={tickerArticles} />
+      {loading ? (
+        <p>Loading News..</p>
+      ) : (
+        <>
+          <TickerBreakingNews articles={tickerArticles} />
+          <div className="container px-8 mx-auto">
             <BreakingNewsSlider articles={sliderArticles} />
-            <div className="container px-8 mx-auto">
-              <div className="grid gap-6 grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 p-4">
-                {gridArticles.map((article) => (
-                  <Newscard key={article._id} article={article} />
-                ))}
-              </div>
+            <div className="grid gap-6 grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 p-4">
+              {gridArticles.map((article) => (
+                <Newscard key={article._id} article={article} allArticles={articles} />
+              ))}
             </div>
-          </>
-        )}
-      </div>
+          </div>
+        </>
+      )}
     </>
   );
 };
