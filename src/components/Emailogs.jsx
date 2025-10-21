@@ -48,7 +48,7 @@ const EmailLogs = () => {
       {logs.length === 0 ? (
         <div className="text-center text-gray-500">No email logs available.</div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-6">
           {logs.map((log, index) => (
             <div
               key={index}
