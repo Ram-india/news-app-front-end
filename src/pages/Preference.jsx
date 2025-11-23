@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import API from "../services/axios";
 import { toast } from "react-hot-toast";
+import CategorySelector from "../components/CategorySelector";
 
 const categories = [
   "business",
@@ -13,35 +14,11 @@ const categories = [
 ];
 
 const Preference = () => {
-  const [selected, setSelected] = useState([]);
+  
   const [frequency, setFrequency] = useState("daily");
   const [message, setMessage] = useState("");
 
-  // Fetch preferences on page load
-  useEffect(() => {
-    const fetchPreferences = async () => {
-      try {
-        const res = await API.get("/preferences");
-        console.log("Fetched preferences from server:", res.data);
-
-        setSelected(res.data.preferences || []);
-        setFrequency(res.data.alertFrequency || "daily");
-      } catch (error) {
-        console.error("Failed to fetch preferences:", error);
-        setMessage("Failed to load preferences");
-      }
-    };
-
-    fetchPreferences();
-  }, []);
-
-  const toggleCategory = (category) => {
-    setSelected((prev) =>
-      prev.includes(category)
-        ? prev.filter((item) => item !== category)
-        : [...prev, category]
-    );
-  };
+  
 
   const savePreferences = async (e) => {
 
@@ -64,23 +41,7 @@ const Preference = () => {
     <div className="max-w-3xl mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Choose Your News Categories</h1>
 
-      {/* Category Buttons */}
-      <div className="flex flex-wrap gap-3 mb-4">
-        {categories.map((category) => (
-          <button
-            key={category}
-            type="button"
-            className={`px-4 py-2 rounded ${
-              selected.includes(category)
-                ? "bg-blue-600 text-white"
-                : "bg-gray-200"
-            }`}
-            onClick={() => toggleCategory(category)}
-          >
-            {category}
-          </button>
-        ))}
-      </div>
+     <CategorySelector/>
 
       {/* Alert Frequency Select */}
       <div className="mb-4">

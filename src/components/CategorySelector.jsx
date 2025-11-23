@@ -58,7 +58,7 @@ const CategorySelector = ({ onChange }) => {
         <button
           key={category}
           type="button"
-          className={`px-4 py-2 rounded ${
+          className={`px-2 py-1 rounded ${
             selected.includes(category)
               ? "bg-blue-600 text-white"
               : "bg-gray-200"
