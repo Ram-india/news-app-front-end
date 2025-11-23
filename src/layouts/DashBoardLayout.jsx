@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
-import Sidebar from '../components/   ';
+import Sidebar from '../components/Sidebar';
 import { useAuth } from '../context/Authcontext';
 
 const DashboardLayout = () => {
