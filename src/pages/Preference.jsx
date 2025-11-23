@@ -14,7 +14,7 @@ const categories = [
 ];
 
 const Preference = () => {
-  
+  const [userCategories, setUserCategories] = useState([]);
   const [frequency, setFrequency] = useState("daily");
   const [message, setMessage] = useState("");
 
@@ -25,7 +25,7 @@ const Preference = () => {
      e.preventDefault();
     try {
       const res = await API.post("/preferences", {
-        preferences: selected,
+        // preferences: selected,
         alertFrequency: frequency,
       });
 
@@ -41,7 +41,7 @@ const Preference = () => {
     <div className="max-w-3xl mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Choose Your News Categories</h1>
 
-     <CategorySelector/>
+     <CategorySelector onChange={setUserCategories} />
 
       {/* Alert Frequency Select */}
       <div className="mb-4">
